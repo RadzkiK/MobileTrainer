@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.engineer.mobiletrainer.camera.CameraSource
 import com.engineer.mobiletrainer.data.Device
@@ -29,9 +30,9 @@ import com.engineer.mobiletrainer.ml.PoseClassifier
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TrainingActivity : AppCompatActivity() {
+class TrainingActivity : FragmentActivity() {
     companion object {
-        private const val FRAGMENT_DIALOG = "dialog"
+        private const val FRAGMENT_DIALOG = "fragment_training"
     }
 
     /** A [SurfaceView] for camera preview.   */

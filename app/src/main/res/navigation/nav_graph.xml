@@ -3,10 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/training">
+    app:startDestination="@id/exerciseChoice">
     <fragment
         android:id="@+id/training"
         android:name="com.engineer.mobiletrainer.Training"
         android:label="fragment_training"
         tools:layout="@layout/fragment_training" />
+    <fragment
+        android:id="@+id/exerciseChoice"
+        android:name="com.engineer.mobiletrainer.ExerciseChoice"
+        android:label="fragment_exercise_choice"
+        tools:layout="@layout/fragment_exercise_choice" >
+        <action
+            android:id="@+id/action_exerciseChoice_to_training"
+            app:destination="@id/training"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
 </navigation>
