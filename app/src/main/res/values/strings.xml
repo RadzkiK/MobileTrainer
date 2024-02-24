@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">MobileTrainer</string>
     <string name="tfe_pe_app_name">TFL Pose Estimation</string>
+    <string name="exercise_photo_description">Person doing exercise</string>
+    <string name="home_description">Gif with gym quotes</string>
+    <string name="squat">Przysiad</string>
+    <string name="deadlift">Martwy Ciąg</string>
+    <string name="rowing">Wiosłowanie sztangą w opadzie tułowia</string>
+    <string name="benchpress">Wyciskanie sztangi poziomo</string>
+    <string name="plank">Deska</string>
     <string name="tfe_pe_request_permission">This app needs camera permission.</string>
     <string name="tfe_pe_tv_score">Score: %.2f</string>
     <string name="tfe_pe_tv_model">Model: </string>
