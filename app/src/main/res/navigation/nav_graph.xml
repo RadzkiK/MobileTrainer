@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/home2">
+    app:startDestination="@id/settings2">
     <fragment
         android:id="@+id/training"
         android:name="com.engineer.mobiletrainer.Training"
@@ -35,4 +35,9 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slid_from_left" />
     </fragment>
+    <fragment
+        android:id="@+id/settings2"
+        android:name="com.engineer.mobiletrainer.AppSettings"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

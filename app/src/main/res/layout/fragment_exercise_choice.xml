@@ -19,7 +19,7 @@
         android:textStyle="bold"
         android:textSize="35sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:background="#777777"
+        android:background="@color/background_dark"
         android:text="Wybierz Ćwiczenie" />
 
     <LinearLayout
@@ -46,7 +46,7 @@
                 android:textStyle="bold|italic"
                 android:textAppearance="@anim/nav_default_pop_enter_anim"
                 android:elevation="3dp"
-                android:background="#2222"/>
+                android:background="@color/background"/>
         </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,7 +71,7 @@
             android:textStyle="bold|italic"
             android:textAppearance="@anim/nav_default_pop_enter_anim"
             android:elevation="@dimen/cardview_compat_inset_shadow"
-            android:background="#2222"/>
+            android:background="@color/background"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,7 +96,7 @@
             android:textStyle="bold|italic"
             android:textAppearance="@anim/nav_default_pop_enter_anim"
             android:elevation="@dimen/cardview_compat_inset_shadow"
-            android:background="#2222"/>
+            android:background="@color/background"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -114,7 +114,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#2222"
+            android:background="@color/background"
             android:elevation="@dimen/cardview_compat_inset_shadow"
             android:gravity="center"
             android:text="@string/rowing"
@@ -147,7 +147,7 @@
             android:textStyle="bold|italic"
             android:textAppearance="@anim/nav_default_pop_enter_anim"
             android:elevation="@dimen/cardview_compat_inset_shadow"
-            android:background="#2222"/>
+            android:background="@color/background"/>
     </LinearLayout>
     </LinearLayout>
 </ScrollView>
