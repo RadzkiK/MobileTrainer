@@ -6,19 +6,21 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
+import kotlinx.coroutines.CoroutineScope
 
 
-@Database(entities = [Settings::class], version = 1)
+@Database(entities = [Settings::class], version = 3)
 public abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         private val DB_NAME = "MobileTrainerDB"
 
+        @Volatile
         private var instance : AppDatabase? = null
 
-        fun getInstance(context : Context) : AppDatabase {
+        fun getInstance(context : Context, scope: CoroutineScope) : AppDatabase {
             return instance ?: synchronized(this) {
-                val instance2 = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, DB_NAME).build()
+                val instance2 = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, DB_NAME).fallbackToDestructiveMigration().build()
                 instance = instance2
                 instance2
             }

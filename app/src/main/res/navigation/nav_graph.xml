@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/settings2">
+    app:startDestination="@id/home2">
     <fragment
         android:id="@+id/training"
         android:name="com.engineer.mobiletrainer.Training"
@@ -15,12 +15,8 @@
         android:label="fragment_exercise_choice"
         tools:layout="@layout/fragment_exercise_choice" >
         <action
-            android:id="@+id/action_exerciseChoice_to_training"
-            app:destination="@id/training"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slid_from_left" />
+            android:id="@+id/action_exerciseChoice_to_trainingActivity"
+            app:destination="@id/trainingActivity" />
     </fragment>
     <fragment
         android:id="@+id/home2"
@@ -40,4 +36,9 @@
         android:name="com.engineer.mobiletrainer.AppSettings"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <activity
+        android:id="@+id/trainingActivity"
+        android:name="com.engineer.mobiletrainer.TrainingActivity"
+        android:label="fragment_training"
+        tools:layout="@layout/fragment_training" /><action android:id="@+id/action_global_settings2" app:destination="@id/settings2"/>
 </navigation>

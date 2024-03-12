@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.os.Process
 import android.view.SurfaceView
 import android.view.View
@@ -301,7 +302,6 @@ class TrainingActivity : FragmentActivity() {
         tvClassificationValue2.visibility = visibility
         tvClassificationValue3.visibility = visibility
     }
-
 
     private fun requestPermission() {
         when (PackageManager.PERMISSION_GRANTED) {

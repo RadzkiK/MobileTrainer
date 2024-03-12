@@ -7,14 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.compose.NavHost
+import androidx.navigation.findNavController
 import com.engineer.mobiletrainer.database.AppDatabase
 import com.engineer.mobiletrainer.database.Settings
 import com.engineer.mobiletrainer.database.SettingsDao
+import com.engineer.mobiletrainer.viewmodels.SettingsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import javax.security.auth.callback.Callback
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,29 +38,19 @@ class AppSettings : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var spnModel: Spinner
+    private lateinit var saveButton: Button
     private var modelPos = 1
-    private val appDatabase by lazy {AppDatabase.getInstance(requireContext())}
-    private lateinit var settingsDao: SettingsDao
-    private lateinit var appSettingsList : List<Settings>
-
-
+    private var settingsList: List<Settings> = emptyList()
+    private val settingsViewModel: SettingsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
 
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-//        runBlocking {
-//            launch(Dispatchers.IO) {
-//            settingsDao = appDatabase.settingsDao()
-//            appSettingsList = settingsDao.getAll()
-//            println("Settings have been downloaded")
-//        } }
 
     }
 
@@ -63,10 +60,26 @@ class AppSettings : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
-        //modelPos = appSettingsList.find { it.setting == "modelPos" }!!.value!!
+
         spnModel = view.findViewById(R.id.spnModel2)
+        saveButton = view.findViewById(R.id.settingsButton)
+
         initSpinner()
-        spnModel.setSelection(modelPos)
+
+        settingsViewModel.allSettings.observe(requireActivity(), Observer { settings ->
+            settingsList = settings
+            val setting = settingsList.find { it.setting?.equals(R.string.setting_1.toString()) == true }
+
+            modelPos = setting?.value!!
+            println("model is:$modelPos")
+            spnModel.setSelection(modelPos)
+        })
+
+        saveButton.setOnClickListener(View.OnClickListener() {view2 ->
+            settingsViewModel.insert(Settings(R.string.setting_1.toString(), modelPos))
+            view2.findNavController().popBackStack()
+        })
+
 
         return view
     }

@@ -38,6 +38,17 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zapisz"
+        android:layout_gravity="bottom|center"
+        android:background="@drawable/roundedbutton"
+        android:layout_marginBottom="10dp"
+        />
+
+
 
 
 </FrameLayout>

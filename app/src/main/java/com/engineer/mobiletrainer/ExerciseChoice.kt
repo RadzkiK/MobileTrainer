@@ -19,7 +19,7 @@ class ExerciseChoice : Fragment() {
         val view = inflater.inflate(R.layout.fragment_exercise_choice, container, false)
 
         view.findViewById<LinearLayout>(R.id.squatView).setOnClickListener(View.OnClickListener() {
-            view -> view.findNavController().navigate(R.id.action_exerciseChoice_to_training)
+            view -> view.findNavController().navigate(R.id.action_exerciseChoice_to_trainingActivity)
         })
 
         return view
