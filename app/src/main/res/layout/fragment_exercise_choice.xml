@@ -20,7 +20,7 @@
         android:textSize="35sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:background="@color/background_dark"
-        android:text="Wybierz Ćwiczenie" />
+        android:text="Choose an exercise" />
 
     <LinearLayout
             android:id="@+id/squatView"
@@ -49,6 +49,7 @@
                 android:background="@color/background"/>
         </LinearLayout>
     <LinearLayout
+        android:id="@+id/benchpressView"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="horizontal">
@@ -74,6 +75,7 @@
             android:background="@color/background"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/deadliftView"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="horizontal">
@@ -99,6 +101,7 @@
             android:background="@color/background"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/rowingView"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="horizontal">
@@ -125,6 +128,7 @@
             android:textStyle="bold|italic" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/plankView"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="horizontal">

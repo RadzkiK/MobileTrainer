@@ -22,6 +22,22 @@ class ExerciseChoice : Fragment() {
             view -> view.findNavController().navigate(R.id.action_exerciseChoice_to_trainingActivity)
         })
 
+        view.findViewById<LinearLayout>(R.id.benchpressView).setOnClickListener(View.OnClickListener() {
+                view -> view.findNavController().navigate(R.id.action_exerciseChoice_to_trainingActivity)
+        })
+
+        view.findViewById<LinearLayout>(R.id.deadliftView).setOnClickListener(View.OnClickListener() {
+                view -> view.findNavController().navigate(R.id.action_exerciseChoice_to_trainingActivity)
+        })
+
+        view.findViewById<LinearLayout>(R.id.rowingView).setOnClickListener(View.OnClickListener() {
+                view -> view.findNavController().navigate(R.id.action_exerciseChoice_to_trainingActivity)
+        })
+
+        view.findViewById<LinearLayout>(R.id.plankView).setOnClickListener(View.OnClickListener() {
+                view -> view.findNavController().navigate(R.id.action_exerciseChoice_to_trainingActivity)
+        })
+
         return view
     }
 }
