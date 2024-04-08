@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_exerciseChoice_to_trainingActivity"
             app:destination="@id/trainingActivity" />
+        <action
+            android:id="@+id/action_exerciseChoice_to_trainingActivity2"
+            app:destination="@id/trainingActivity" />
     </fragment>
     <fragment
         android:id="@+id/home2"
@@ -41,4 +44,9 @@
         android:name="com.engineer.mobiletrainer.TrainingActivity"
         android:label="fragment_training"
         tools:layout="@layout/fragment_training" /><action android:id="@+id/action_global_settings2" app:destination="@id/settings2"/>
+    <fragment
+        android:id="@+id/mainPage"
+        android:name="com.engineer.mobiletrainer.MainPage"
+        android:label="fragment_main_page"
+        tools:layout="@layout/fragment_main_page" />
 </navigation>
