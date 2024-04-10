@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.compose.NavHost
 import androidx.navigation.findNavController
@@ -17,6 +18,7 @@ import com.engineer.mobiletrainer.database.AppDatabase
 import com.engineer.mobiletrainer.database.Settings
 import com.engineer.mobiletrainer.database.SettingsDao
 import com.engineer.mobiletrainer.viewmodels.SettingsViewModel
+import com.engineer.mobiletrainer.viewmodels.SettingsViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -41,7 +43,7 @@ class AppSettings : Fragment() {
     private lateinit var saveButton: Button
     private var modelPos = 1
     private var settingsList: List<Settings> = emptyList()
-    private val settingsViewModel: SettingsViewModel by activityViewModels()
+    private val settingsViewModel: SettingsViewModel by viewModels { SettingsViewModelFactory((requireActivity().application as MobileTrainerApplication).settingsRepository) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,14 +72,16 @@ class AppSettings : Fragment() {
             settingsList = settings
             val setting = settingsList.find { it.setting?.equals(R.string.setting_1.toString()) == true }
 
-            modelPos = setting?.value!!
+            if(setting?.value != null) {
+                modelPos = setting.value
+            }
             println("model is:$modelPos")
             spnModel.setSelection(modelPos)
         })
 
         saveButton.setOnClickListener(View.OnClickListener() {view2 ->
             settingsViewModel.insert(Settings(R.string.setting_1.toString(), modelPos))
-            view2.findNavController().popBackStack()
+            view2.findNavController().navigate(R.id.action_global_mainPage)
         })
 
 

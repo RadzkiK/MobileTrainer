@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
 import kotlinx.coroutines.CoroutineScope
 
 
-@Database(entities = [Settings::class], version = 3)
+@Database(entities = [Settings::class, Profile::class], version = 4)
 public abstract class AppDatabase : RoomDatabase() {
 
     companion object {
@@ -26,6 +26,8 @@ public abstract class AppDatabase : RoomDatabase() {
             }
         }
     }
+
+    abstract fun profileDao(): ProfileDao
 
     abstract fun settingsDao() : SettingsDao
 }

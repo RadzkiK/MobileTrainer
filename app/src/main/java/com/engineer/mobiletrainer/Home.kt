@@ -66,7 +66,7 @@ class Home : Fragment() {
         }
 
         view.findViewById<Button>(R.id.home_button).setOnClickListener(View.OnClickListener {
-                view -> view.findNavController().navigate(R.id.action_home2_to_exerciseChoice)
+                view -> view.findNavController().navigate(R.id.action_home2_to_mainPage)
         })
 
 

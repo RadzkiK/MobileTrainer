@@ -15,7 +15,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="74dp"
-            android:text="Witaj!"
+            android:text="Hello!"
             android:textStyle="bold"
             android:textAlignment="center"
             android:gravity="center"
@@ -26,13 +26,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp">
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="Your last training was: "
-                android:textSize="18sp" />
+                android:text="Your lastly used plan was: "
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
             <TextView
                 android:id="@+id/mainPage_lastTrainingText"
                 android:layout_width="wrap_content"
@@ -40,6 +43,66 @@
                 android:textSize="18sp"
                 android:textStyle="bold"/>
         </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:paddingHorizontal="25dp">
+
+            <Button
+                android:id="@+id/mainPage_tile_plans"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:background="@drawable/main_page_tile"
+                android:layout_height="170dp"
+                android:layout_width="170dp"
+                android:layout_gravity="top"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="Plans"
+                android:textStyle="bold|italic"
+                android:textSize="30dp"
+                android:elevation="15dp"/>
+
+            <Button
+                android:id="@+id/mainPage_tile_history"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:background="@drawable/main_page_tile"
+                android:layout_height="170dp"
+                android:layout_width="170dp"
+                android:layout_gravity="bottom"
+                android:text="History"
+                android:textStyle="bold|italic"
+                android:textSize="30dp"/>
+
+            <Button
+                android:id="@+id/mainPage_tile_rep"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:background="@drawable/main_page_tile"
+                android:text="Repetition Counting"
+                android:textSize="30dp"
+                android:textStyle="bold|italic"
+                android:gravity="center"
+                android:layout_gravity="top"/>
+
+            <Button
+                android:id="@+id/mainPage_tile_calendar"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:background="@drawable/main_page_tile"
+                android:layout_height="170dp"
+                android:layout_width="170dp"
+                android:layout_gravity="bottom"
+                android:text="Training Calendar"
+                android:textStyle="bold|italic"
+                android:textSize="30dp"/>
+        </GridLayout>
 
     </LinearLayout>
 </FrameLayout>

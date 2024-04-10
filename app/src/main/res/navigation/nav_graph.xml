@@ -27,12 +27,8 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_home2_to_exerciseChoice"
-            app:destination="@id/exerciseChoice"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slid_from_left" />
+            android:id="@+id/action_home2_to_mainPage"
+            app:destination="@id/mainPage" />
     </fragment>
     <fragment
         android:id="@+id/settings2"
@@ -48,5 +44,22 @@
         android:id="@+id/mainPage"
         android:name="com.engineer.mobiletrainer.MainPage"
         android:label="fragment_main_page"
-        tools:layout="@layout/fragment_main_page" />
+        tools:layout="@layout/fragment_main_page" >
+        <action
+            android:id="@+id/action_mainPage_to_exerciseChoice"
+            app:destination="@id/exerciseChoice" />
+        <action
+            android:id="@+id/action_mainPage_to_plansFragment"
+            app:destination="@id/plansFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.engineer.mobiletrainer.ProfilePage"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" /><action android:id="@+id/action_global_profile" app:destination="@id/profile"/><action android:id="@+id/action_global_mainPage" app:destination="@id/mainPage"/>
+    <fragment
+        android:id="@+id/plansFragment"
+        android:name="com.engineer.mobiletrainer.PlansFragment"
+        android:label="fragment_plans"
+        tools:layout="@layout/fragment_plans" />
 </navigation>

@@ -32,7 +32,7 @@
                 android:id="@+id/spnModel2"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:background="@drawable/my_gradient"
+                android:background="@color/background_dark"
                 android:textAlignment="textEnd" />
         </LinearLayout>
 
@@ -42,11 +42,10 @@
         android:id="@+id/settingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Zapisz"
+        android:text="Save"
         android:layout_gravity="bottom|center"
         android:background="@drawable/roundedbutton"
-        android:layout_marginBottom="10dp"
-        />
+        android:layout_marginBottom="10dp" />
 
 
 

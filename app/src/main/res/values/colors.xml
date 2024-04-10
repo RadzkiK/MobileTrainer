@@ -8,5 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background">#2222</color>
-    <color name="background_dark">#777777</color>
+    <color name="background_dark">#d66a3c</color>
 </resources>
