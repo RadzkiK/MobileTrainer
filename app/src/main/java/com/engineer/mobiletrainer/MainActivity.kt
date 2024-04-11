@@ -1,9 +1,7 @@
 package com.engineer.mobiletrainer
 
 
-import android.app.Activity
 import android.app.Dialog
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -17,35 +15,30 @@ import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.engineer.mobiletrainer.database.AppDatabase
-import com.engineer.mobiletrainer.database.Profile
-import com.engineer.mobiletrainer.database.Settings
-import com.engineer.mobiletrainer.database.SettingsDao
+import com.engineer.mobiletrainer.database.DatabaseGenerator
+import com.engineer.mobiletrainer.database.entity.Profile
+import com.engineer.mobiletrainer.viewmodels.PlansViewModelFactory
+import com.engineer.mobiletrainer.viewmodels.PlansViewModel
 import com.engineer.mobiletrainer.viewmodels.ProfileViewModel
 import com.engineer.mobiletrainer.viewmodels.ProfileViewModelFactory
-import com.engineer.mobiletrainer.viewmodels.SettingsViewModel
-import com.engineer.mobiletrainer.viewmodels.SettingsViewModelFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
-    //private val settingsViewModel : SettingsViewModel by viewModels { SettingsViewModelFactory((application as MobileTrainerApplication).settingsRepository) }
     private val profileViewModel: ProfileViewModel by viewModels { ProfileViewModelFactory((application as MobileTrainerApplication).profileRepository) }
-    //private var settingsList: List<Settings> = emptyList()
-    private var profileList: List<Profile> = emptyList()
+    private val plansViewModel: PlansViewModel by viewModels { PlansViewModelFactory(
+        (application as MobileTrainerApplication).plansRepository,
+        (application as MobileTrainerApplication).exerciseRepository,
+        (application as MobileTrainerApplication).trainingSessionRepository,
+        (application as MobileTrainerApplication).exerciseSessionRepository,
+        (application as MobileTrainerApplication).exerciseSetRepository) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         profileViewModel.allProfiles.observe(this) { profiles ->
-            //profileList = profiles
             if (profiles.isEmpty()) {
             //If there is no profile for the user show a dialog to create a profile, it can be fully filled later
             val dialog = Dialog(this)
@@ -74,6 +67,9 @@ class MainActivity : AppCompatActivity() {
                 }
             })
                 dialog.show()
+                //also if this is first time let's generate some values in database
+                val databaseGenerator = DatabaseGenerator(plansViewModel)
+                databaseGenerator.generatePlans()
         } else {
             //if there is a profile then do nothing
         }

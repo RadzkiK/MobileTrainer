@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.engineer.mobiletrainer.database.Settings
-import com.engineer.mobiletrainer.database.SettingsRepository
+import com.engineer.mobiletrainer.database.entity.Settings
+import com.engineer.mobiletrainer.database.repository.SettingsRepository
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(private val repository: SettingsRepository) : ViewModel() {

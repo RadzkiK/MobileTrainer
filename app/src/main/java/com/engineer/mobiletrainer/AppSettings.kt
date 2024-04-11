@@ -9,21 +9,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.compose.NavHost
 import androidx.navigation.findNavController
-import com.engineer.mobiletrainer.database.AppDatabase
-import com.engineer.mobiletrainer.database.Settings
-import com.engineer.mobiletrainer.database.SettingsDao
+import com.engineer.mobiletrainer.database.entity.Settings
 import com.engineer.mobiletrainer.viewmodels.SettingsViewModel
 import com.engineer.mobiletrainer.viewmodels.SettingsViewModelFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import javax.security.auth.callback.Callback
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

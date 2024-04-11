@@ -5,17 +5,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.engineer.mobiletrainer.database.Profile
-import com.engineer.mobiletrainer.database.ProfileRepository
+import com.engineer.mobiletrainer.database.entity.Profile
+import com.engineer.mobiletrainer.database.entity.relations.ProfileWithPlans
+import com.engineer.mobiletrainer.database.repository.ProfileRepository
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val profileRepository: ProfileRepository) : ViewModel() {
     val allProfiles: LiveData<List<Profile>> = profileRepository.allProfile.asLiveData()
 
+
     private var profile: Profile = Profile("none", "none")
         get() = field
 
-    fun getProfileOf(named: String) = viewModelScope.launch {
+    fun getProfileOf(named:  String) = viewModelScope.launch {
         profile = profileRepository.getProfileOf(named = named)
     }
 

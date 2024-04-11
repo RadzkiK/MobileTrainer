@@ -1,6 +1,8 @@
-package com.engineer.mobiletrainer.database
+package com.engineer.mobiletrainer.database.repository
 
 import androidx.annotation.WorkerThread
+import com.engineer.mobiletrainer.database.entity.Settings
+import com.engineer.mobiletrainer.database.dao.SettingsDao
 import kotlinx.coroutines.flow.Flow
 
 class SettingsRepository(private val settingsDao: SettingsDao) {

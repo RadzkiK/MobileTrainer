@@ -1,4 +1,4 @@
-package com.engineer.mobiletrainer.database
+package com.engineer.mobiletrainer.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

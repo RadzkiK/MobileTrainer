@@ -5,7 +5,7 @@
     <string name="home_description">Gif with gym quotes</string>
     <string name="squat">Squat</string>
     <string name="deadlift">Deadlift</string>
-    <string name="rowing">Barbell rowing</string>
+    <string name="rowing">Bent Over Row</string>
     <string name="benchpress">Benchpress</string>
     <string name="plank">Plank</string>
     <string name="tfe_pe_request_permission">This app needs camera permission.</string>

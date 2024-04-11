@@ -1,6 +1,9 @@
-package com.engineer.mobiletrainer.database
+package com.engineer.mobiletrainer.database.repository
 
 import androidx.annotation.WorkerThread
+import com.engineer.mobiletrainer.database.entity.Profile
+import com.engineer.mobiletrainer.database.dao.ProfileDao
+import com.engineer.mobiletrainer.database.entity.relations.ProfileWithPlans
 import kotlinx.coroutines.flow.Flow
 
 class ProfileRepository(private val profileDao: ProfileDao) {
@@ -27,5 +30,6 @@ class ProfileRepository(private val profileDao: ProfileDao) {
     suspend fun delete(name: String, surname: String) {
         profileDao.deleteProfileOf(name, surname)
     }
+
 
 }
