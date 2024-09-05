@@ -67,7 +67,6 @@ class PlansFragment : Fragment() {
             plans = list
 
             println(plans)
-
             recyclerView.layoutManager = layoutManager
 
             plansAdapter = PlansAdapter(plans)
