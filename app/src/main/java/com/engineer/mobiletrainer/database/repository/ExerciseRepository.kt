@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 class ExerciseRepository(private val exerciseDao: ExerciseDao) {
 
-    val allExercises: Flow<List<Exercise>> = exerciseDao.getAll()
+    val allExercises: Flow<MutableList<Exercise>> = exerciseDao.getAll()
 
     @WorkerThread
     fun getExercise(name: String): Exercise {
@@ -34,12 +34,12 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
     }
 
     @WorkerThread
-    suspend fun getExercisesWithSessions(): List<ExerciseWithSessions> {
+    suspend fun getExercisesWithSessions(): MutableList<ExerciseWithSessions> {
         return exerciseDao.getExercisesWithSessions()
     }
 
     @WorkerThread
-    suspend fun getExercisesWithPlans(): List<ExercisesWithPlans> {
+    suspend fun getExercisesWithPlans(): MutableList<ExercisesWithPlans> {
         return exerciseDao.getExercisesWithPlans()
     }
 }

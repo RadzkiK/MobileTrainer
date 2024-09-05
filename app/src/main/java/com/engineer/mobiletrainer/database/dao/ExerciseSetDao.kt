@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ExerciseSetDao {
     @Query("SELECT * FROM exercise_sets ORDER BY esetid ASC")
-    fun getAll(): Flow<List<ExerciseSet>>
+    fun getAll(): Flow<MutableList<ExerciseSet>>
     @Update(onConflict = OnConflictStrategy.ABORT)
     suspend fun update(exerciseSet: ExerciseSet)
     @Insert(onConflict = OnConflictStrategy.REPLACE)

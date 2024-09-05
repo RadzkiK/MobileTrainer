@@ -32,34 +32,26 @@ class PlansViewModel(
     private val exerciseSessionRepository: ExerciseSessionRepository,
     private val exerciseSetRepository: ExerciseSetRepository
 ) : ViewModel() {
-    val allPlans: LiveData<List<Plans>> = plansRepository.allPlans.asLiveData()
-    val allExercises: LiveData<List<Exercise>> = exerciseRepository.allExercises.asLiveData()
-    val allTrainingSessions: LiveData<List<TrainingSession>> = trainingSessionRepository.allTrainingSessions.asLiveData()
-    val allExerciseSessions: LiveData<List<ExerciseSession>> = exerciseSessionRepository.allExerciseSessions.asLiveData()
-    val allExerciseSets: LiveData<List<ExerciseSet>> = exerciseSetRepository.allExerciseSets.asLiveData()
+    val allPlans: LiveData<MutableList<Plans>> = plansRepository.allPlans.asLiveData()
+    val allExercises: LiveData<MutableList<Exercise>> = exerciseRepository.allExercises.asLiveData()
+    val allTrainingSessions: LiveData<MutableList<TrainingSession>> = trainingSessionRepository.allTrainingSessions.asLiveData()
+    val allExerciseSessions: LiveData<MutableList<ExerciseSession>> = exerciseSessionRepository.allExerciseSessions.asLiveData()
+    val allExerciseSets: LiveData<MutableList<ExerciseSet>> = exerciseSetRepository.allExerciseSets.asLiveData()
 
-    private var plansWithTrainingSessions: List<PlansWithTrainingSessions> = emptyList()
-        get() = field
-    private var plansWithExercises: List<PlansWithExercises> = emptyList()
-        get() = field
-    private var plan: Plans = Plans("")
-        get() = field
+    var plansWithTrainingSessions: MutableList<PlansWithTrainingSessions> = emptyList<PlansWithTrainingSessions>().toMutableList()
+    var plansWithExercises: MutableList<PlansWithExercises> = emptyList<PlansWithExercises>().toMutableList()
+    var plan: Plans = Plans("")
 
-    private var exercisesWithSessions: List<ExerciseWithSessions> = emptyList()
-        get() = field
-    private var exercisesWithPlans: List<ExercisesWithPlans> = emptyList()
-        get() = field
-    private var exercise: Exercise = Exercise("")
-        get() = field
+    var exercisesWithSessions: MutableList<ExerciseWithSessions> = emptyList<ExerciseWithSessions>().toMutableList()
+    var exercisesWithPlans: MutableList<ExercisesWithPlans> = emptyList<ExercisesWithPlans>().toMutableList()
+    var exercise: Exercise = Exercise("")
 
-    private var trainingSessionWithExerciseSessions: List<TrainingSessionWithExerciseSessions> = emptyList()
-        get() = field
+    var trainingSessionWithExerciseSessions: MutableList<TrainingSessionWithExerciseSessions> = emptyList<TrainingSessionWithExerciseSessions>().toMutableList()
 
-    private var exerciseSessionWithSets: List<ExerciseSessionWithSets> = emptyList()
-        get() = field
+    var exerciseSessionWithSets: MutableList<ExerciseSessionWithSets> = emptyList<ExerciseSessionWithSets>().toMutableList()
 
     //Plans
-    fun getAllPlans() : List<Plans>? {
+    fun getAllPlans() : MutableList<Plans>? {
         return allPlans.value
     }
 
@@ -92,7 +84,7 @@ class PlansViewModel(
     }
 
     //Exercise
-    fun getAllExercises() : List<Exercise>? {
+    fun getAllExercises() : MutableList<Exercise>? {
         return allExercises.value
     }
 
@@ -121,7 +113,7 @@ class PlansViewModel(
     }
 
     //TrainingSession
-    fun getAllTrainingSessions(): List<TrainingSession>? {
+    fun getAllTrainingSessions(): MutableList<TrainingSession>? {
         return allTrainingSessions.value
     }
 
@@ -142,7 +134,7 @@ class PlansViewModel(
     }
 
     //ExerciseSession
-    fun getAllExerciseSessions(): List<ExerciseSession>? {
+    fun getAllExerciseSessions(): MutableList<ExerciseSession>? {
         return allExerciseSessions.value
     }
 
@@ -163,7 +155,7 @@ class PlansViewModel(
     }
 
     //ExerciseSet
-    fun getAllExerciseSets(): List<ExerciseSet>? {
+    fun getAllExerciseSets(): MutableList<ExerciseSet>? {
         return allExerciseSets.value
     }
 

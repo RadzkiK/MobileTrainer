@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 interface ExerciseDao {
 
     @Query("SELECT * FROM exercises ORDER BY name ASC")
-    fun getAll(): Flow<List<Exercise>>
+    fun getAll(): Flow<MutableList<Exercise>>
     @Query("SELECT * FROM exercises WHERE name = :named")
     fun getExercise(named: String): Exercise
     @Update(onConflict = OnConflictStrategy.ABORT)
@@ -27,10 +27,10 @@ interface ExerciseDao {
 
     @Transaction
     @Query("SELECT * FROM exercises")
-    fun getExercisesWithSessions(): List<ExerciseWithSessions>
+    fun getExercisesWithSessions(): MutableList<ExerciseWithSessions>
 
     @Transaction
     @Query("SELECT * FROM exercises")
-    fun getExercisesWithPlans(): List<ExercisesWithPlans>
+    fun getExercisesWithPlans(): MutableList<ExercisesWithPlans>
 
 }

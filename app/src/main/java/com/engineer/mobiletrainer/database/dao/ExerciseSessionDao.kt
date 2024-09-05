@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ExerciseSessionDao {
     @Query("SELECT * FROM exercise_sessions ORDER BY esid ASC")
-    fun getAll(): Flow<List<ExerciseSession>>
+    fun getAll(): Flow<MutableList<ExerciseSession>>
     @Update(onConflict = OnConflictStrategy.ABORT)
     suspend fun update(exerciseSession: ExerciseSession)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -24,5 +24,5 @@ interface ExerciseSessionDao {
 
     @Transaction
     @Query("SELECT * FROM exercise_sessions")
-    fun getExerciseSessionWithSets(): List<ExerciseSessionWithSets>
+    fun getExerciseSessionWithSets(): MutableList<ExerciseSessionWithSets>
 }

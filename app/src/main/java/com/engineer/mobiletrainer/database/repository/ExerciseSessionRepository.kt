@@ -7,7 +7,7 @@ import com.engineer.mobiletrainer.database.entity.relations.ExerciseSessionWithS
 import kotlinx.coroutines.flow.Flow
 
 class ExerciseSessionRepository(private val exerciseSessionDao: ExerciseSessionDao) {
-    val allExerciseSessions: Flow<List<ExerciseSession>> = exerciseSessionDao.getAll()
+    val allExerciseSessions: Flow<MutableList<ExerciseSession>> = exerciseSessionDao.getAll()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -27,7 +27,7 @@ class ExerciseSessionRepository(private val exerciseSessionDao: ExerciseSessionD
     }
 
     @WorkerThread
-    suspend fun getExerciseSessionWithSets(): List<ExerciseSessionWithSets> {
+    suspend fun getExerciseSessionWithSets(): MutableList<ExerciseSessionWithSets> {
         return exerciseSessionDao.getExerciseSessionWithSets()
     }
 }

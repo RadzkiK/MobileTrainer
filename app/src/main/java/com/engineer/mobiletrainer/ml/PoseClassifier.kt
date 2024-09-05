@@ -32,8 +32,10 @@ class PoseClassifier(
         private const val MODEL_FILENAME = "exercisesPosesNoPlank_classifier.tflite"
         private const val LABELS_FILENAME = "exercisesPosesNoPlank_labels.txt"
         private const val CPU_NUM_THREADS = 4
+        private lateinit var model: ExercisesposesnoplankClassifier
 
         fun create(context: Context): PoseClassifier {
+            model = com.engineer.mobiletrainer.ml.ExercisesposesnoplankClassifier.newInstance(context)
             val options = Interpreter.Options().apply {
                 setNumThreads(CPU_NUM_THREADS)
             }

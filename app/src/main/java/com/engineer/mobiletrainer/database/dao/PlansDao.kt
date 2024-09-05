@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
 interface PlansDao {
 
     @Query("SELECT * FROM plans ORDER BY name ASC")
-    fun getAll(): Flow<List<Plans>>
+    fun getAll(): Flow<MutableList<Plans>>
 
     @Query("SELECT * FROM plans WHERE name = :named")
     fun getPlan(named: String): Plans
@@ -33,10 +33,10 @@ interface PlansDao {
 
     @Transaction
     @Query("SELECT * FROM plans")
-    fun getPlansWithTrainingSessions(): List<PlansWithTrainingSessions>
+    fun getPlansWithTrainingSessions(): MutableList<PlansWithTrainingSessions>
 
     @Transaction
     @Query("SELECT * FROM plans")
-    fun getPlansWithExercises(): List<PlansWithExercises>
+    fun getPlansWithExercises(): MutableList<PlansWithExercises>
 
 }

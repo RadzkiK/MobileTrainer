@@ -6,7 +6,7 @@ import com.engineer.mobiletrainer.database.entity.ExerciseSet
 import kotlinx.coroutines.flow.Flow
 
 class ExerciseSetRepository(private val exerciseSetDao: ExerciseSetDao) {
-    val allExerciseSets: Flow<List<ExerciseSet>> = exerciseSetDao.getAll()
+    val allExerciseSets: Flow<MutableList<ExerciseSet>> = exerciseSetDao.getAll()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

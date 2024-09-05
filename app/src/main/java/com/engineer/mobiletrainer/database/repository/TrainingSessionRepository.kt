@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 class TrainingSessionRepository(private val trainingSessionDao: TrainingSessionDao) {
 
-    val allTrainingSessions: Flow<List<TrainingSession>> = trainingSessionDao.getAll()
+    val allTrainingSessions: Flow<MutableList<TrainingSession>> = trainingSessionDao.getAll()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -28,7 +28,7 @@ class TrainingSessionRepository(private val trainingSessionDao: TrainingSessionD
     }
 
     @WorkerThread
-    suspend fun getTrainingSessionWithExercisesSessions():List<TrainingSessionWithExerciseSessions> {
+    suspend fun getTrainingSessionWithExercisesSessions():MutableList<TrainingSessionWithExerciseSessions> {
         return trainingSessionDao.getTrainingSessionWithExercisesSessions()
     }
 }

@@ -9,10 +9,10 @@ import com.engineer.mobiletrainer.database.entity.relations.PlansWithTrainingSes
 import kotlinx.coroutines.flow.Flow
 
 class PlansRepository(private val plansDao: PlansDao) {
-    val allPlans: Flow<List<Plans>> = plansDao.getAll()
+    val allPlans: Flow<MutableList<Plans>> = plansDao.getAll()
 
     @WorkerThread
-    fun getPlan(name: String): Plans {
+    suspend fun getPlan(name: String): Plans {
         return plansDao.getPlan(name)
     }
 
@@ -40,12 +40,12 @@ class PlansRepository(private val plansDao: PlansDao) {
     }
 
     @WorkerThread
-    suspend fun getPlansWithTrainingSessions(): List<PlansWithTrainingSessions> {
+    suspend fun getPlansWithTrainingSessions(): MutableList<PlansWithTrainingSessions> {
         return plansDao.getPlansWithTrainingSessions()
     }
 
     @WorkerThread
-    suspend fun getPlansWithExercises(): List<PlansWithExercises> {
+    suspend fun getPlansWithExercises(): MutableList<PlansWithExercises> {
         return plansDao.getPlansWithExercises()
     }
 }

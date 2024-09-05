@@ -2,6 +2,7 @@ package com.engineer.mobiletrainer
 
 
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -55,6 +56,11 @@ class MainActivity : AppCompatActivity() {
                 if(name.text.isNotEmpty() && surname.text.isNotEmpty()) {
 
                     profileViewModel.insert(Profile(name.text.toString(), surname.text.toString()))
+                    val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return@OnClickListener
+                    with (sharedPref.edit()) {
+                        putString(R.string.user_name.toString(), name.text.toString())
+                        apply()
+                    }
                     dialog.dismiss()
 
                 } else {
@@ -68,10 +74,19 @@ class MainActivity : AppCompatActivity() {
             })
                 dialog.show()
                 //also if this is first time let's generate some values in database
-                val databaseGenerator = DatabaseGenerator(plansViewModel)
+                val databaseGenerator = DatabaseGenerator(plansViewModel, this)
                 databaseGenerator.generatePlans()
         } else {
             //if there is a profile then do nothing
+            val name: String? = profiles[0].name
+            val uid: Int = profiles[0].uid
+            val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return@observe
+            with (sharedPref.edit()) {
+                putString(R.string.user_name.toString(), name)
+                putInt(R.string.uid.toString(), uid)
+                apply()
+            }
+
         }
         }
 
