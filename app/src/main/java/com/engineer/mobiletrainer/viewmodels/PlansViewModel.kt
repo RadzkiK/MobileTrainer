@@ -13,8 +13,8 @@ import com.engineer.mobiletrainer.database.entity.PlansExerciseCrossRef
 import com.engineer.mobiletrainer.database.entity.TrainingSession
 import com.engineer.mobiletrainer.database.entity.relations.ExerciseSessionWithSets
 import com.engineer.mobiletrainer.database.entity.relations.ExerciseWithSessions
-import com.engineer.mobiletrainer.database.entity.relations.ExercisesWithPlans
-import com.engineer.mobiletrainer.database.entity.relations.PlansWithExercises
+import com.engineer.mobiletrainer.database.entity.relations.ExerciseWithPlans
+import com.engineer.mobiletrainer.database.entity.relations.PlanWithExercises
 import com.engineer.mobiletrainer.database.entity.relations.PlansWithTrainingSessions
 import com.engineer.mobiletrainer.database.entity.relations.TrainingSessionWithExerciseSessions
 import com.engineer.mobiletrainer.database.repository.ExerciseRepository
@@ -39,11 +39,11 @@ class PlansViewModel(
     val allExerciseSets: LiveData<MutableList<ExerciseSet>> = exerciseSetRepository.allExerciseSets.asLiveData()
 
     var plansWithTrainingSessions: MutableList<PlansWithTrainingSessions> = emptyList<PlansWithTrainingSessions>().toMutableList()
-    var plansWithExercises: MutableList<PlansWithExercises> = emptyList<PlansWithExercises>().toMutableList()
+    lateinit var planWithExercises: LiveData<MutableList<PlanWithExercises>>
     var plan: Plans = Plans("")
 
     var exercisesWithSessions: MutableList<ExerciseWithSessions> = emptyList<ExerciseWithSessions>().toMutableList()
-    var exercisesWithPlans: MutableList<ExercisesWithPlans> = emptyList<ExercisesWithPlans>().toMutableList()
+    var exerciseWithPlans: MutableList<ExerciseWithPlans> = emptyList<ExerciseWithPlans>().toMutableList()
     var exercise: Exercise = Exercise("")
 
     var trainingSessionWithExerciseSessions: MutableList<TrainingSessionWithExerciseSessions> = emptyList<TrainingSessionWithExerciseSessions>().toMutableList()
@@ -79,8 +79,8 @@ class PlansViewModel(
         plansWithTrainingSessions = plansRepository.getPlansWithTrainingSessions()
     }
 
-    fun getPlansWithExercises() = viewModelScope.launch {
-        plansWithExercises = plansRepository.getPlansWithExercises()
+    fun getPlanWithExercises(pid: Int) = viewModelScope.launch {
+        planWithExercises = plansRepository.getPlanWithExercises(pid).asLiveData()
     }
 
     //Exercise
@@ -108,8 +108,8 @@ class PlansViewModel(
         exercisesWithSessions = exerciseRepository.getExercisesWithSessions()
     }
 
-    fun getExerciseWithPlans() = viewModelScope.launch {
-        exercisesWithPlans = exerciseRepository.getExercisesWithPlans()
+    fun getExerciseWithPlans(eid: Int) = viewModelScope.launch {
+        exerciseWithPlans = exerciseRepository.getExerciseWithPlans(eid)
     }
 
     //TrainingSession

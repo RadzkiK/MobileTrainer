@@ -4,7 +4,7 @@ import androidx.annotation.WorkerThread
 import com.engineer.mobiletrainer.database.entity.Exercise
 import com.engineer.mobiletrainer.database.dao.ExerciseDao
 import com.engineer.mobiletrainer.database.entity.relations.ExerciseWithSessions
-import com.engineer.mobiletrainer.database.entity.relations.ExercisesWithPlans
+import com.engineer.mobiletrainer.database.entity.relations.ExerciseWithPlans
 import kotlinx.coroutines.flow.Flow
 
 class ExerciseRepository(private val exerciseDao: ExerciseDao) {
@@ -12,7 +12,7 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
     val allExercises: Flow<MutableList<Exercise>> = exerciseDao.getAll()
 
     @WorkerThread
-    fun getExercise(name: String): Exercise {
+    suspend fun getExercise(name: String): Exercise {
         return exerciseDao.getExercise(name)
     }
 
@@ -39,7 +39,7 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
     }
 
     @WorkerThread
-    suspend fun getExercisesWithPlans(): MutableList<ExercisesWithPlans> {
-        return exerciseDao.getExercisesWithPlans()
+    suspend fun getExerciseWithPlans(eid: Int): MutableList<ExerciseWithPlans> {
+        return exerciseDao.getExerciseWithPlans(eid)
     }
 }

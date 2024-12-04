@@ -1,4 +1,4 @@
-package com.engineer.mobiletrainer
+package com.engineer.mobiletrainer.fragments
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import com.engineer.mobiletrainer.R
 import com.engineer.mobiletrainer.database.entity.Profile
 import com.engineer.mobiletrainer.viewmodels.ProfileViewModel
 import java.lang.NumberFormatException

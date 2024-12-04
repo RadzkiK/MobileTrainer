@@ -1,4 +1,4 @@
-package com.engineer.mobiletrainer
+package com.engineer.mobiletrainer.activities
 
 
 import android.app.Dialog
@@ -17,6 +17,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.engineer.mobiletrainer.MobileTrainerApplication
+import com.engineer.mobiletrainer.R
 import com.engineer.mobiletrainer.database.DatabaseGenerator
 import com.engineer.mobiletrainer.database.entity.Profile
 import com.engineer.mobiletrainer.viewmodels.PlansViewModelFactory
@@ -75,7 +77,14 @@ class MainActivity : AppCompatActivity() {
                 dialog.show()
                 //also if this is first time let's generate some values in database
                 val databaseGenerator = DatabaseGenerator(plansViewModel, this)
-                databaseGenerator.generatePlans()
+                try {
+                    databaseGenerator.generatePlans()
+                } catch (e: IllegalStateException) {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("Error")
+                    builder.setMessage("Run application again")
+                }
+
         } else {
             //if there is a profile then do nothing
             val name: String? = profiles[0].name

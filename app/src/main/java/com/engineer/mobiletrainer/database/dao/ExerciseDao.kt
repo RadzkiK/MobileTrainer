@@ -8,7 +8,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.engineer.mobiletrainer.database.entity.Exercise
 import com.engineer.mobiletrainer.database.entity.relations.ExerciseWithSessions
-import com.engineer.mobiletrainer.database.entity.relations.ExercisesWithPlans
+import com.engineer.mobiletrainer.database.entity.relations.ExerciseWithPlans
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -17,7 +17,7 @@ interface ExerciseDao {
     @Query("SELECT * FROM exercises ORDER BY name ASC")
     fun getAll(): Flow<MutableList<Exercise>>
     @Query("SELECT * FROM exercises WHERE name = :named")
-    fun getExercise(named: String): Exercise
+    suspend fun getExercise(named: String): Exercise
     @Update(onConflict = OnConflictStrategy.ABORT)
     suspend fun update(exercise: Exercise)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -27,10 +27,10 @@ interface ExerciseDao {
 
     @Transaction
     @Query("SELECT * FROM exercises")
-    fun getExercisesWithSessions(): MutableList<ExerciseWithSessions>
+    suspend fun getExercisesWithSessions(): MutableList<ExerciseWithSessions>
 
     @Transaction
-    @Query("SELECT * FROM exercises")
-    fun getExercisesWithPlans(): MutableList<ExercisesWithPlans>
+    @Query("SELECT * FROM exercises JOIN plansexercisecrossref ON exercises.eid = plansexercisecrossref.eid WHERE plansexercisecrossref.eid = :eid")
+    suspend fun getExerciseWithPlans(eid: Int): MutableList<ExerciseWithPlans>
 
 }

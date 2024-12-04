@@ -7,7 +7,7 @@ import com.engineer.mobiletrainer.database.entity.Exercise
 import com.engineer.mobiletrainer.database.entity.Plans
 import com.engineer.mobiletrainer.database.entity.PlansExerciseCrossRef
 
-data class PlansWithExercises(
+data class PlanWithExercises(
     @Embedded val plan: Plans,
     @Relation(
         parentColumn = "pid",
@@ -17,7 +17,7 @@ data class PlansWithExercises(
     val exercises: List<Exercise>
 )
 
-data class ExercisesWithPlans(
+data class ExerciseWithPlans(
     @Embedded val exercise: Exercise,
     @Relation(
         parentColumn = "eid",

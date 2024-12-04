@@ -1,4 +1,4 @@
-package com.engineer.mobiletrainer
+package com.engineer.mobiletrainer.fragments
 
 import android.graphics.ImageDecoder
 import android.graphics.drawable.AnimatedImageDrawable
@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.navigation.findNavController
+import com.engineer.mobiletrainer.R
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -55,7 +56,9 @@ class Home : Fragment() {
 
         GlobalScope.launch(Dispatchers.Default) {
             // worker thread
-            val source = ImageDecoder.createSource(requireContext().resources, R.drawable.home_background)
+            val source = ImageDecoder.createSource(requireContext().resources,
+                R.drawable.home_background
+            )
             val drawable = ImageDecoder.decodeDrawable(source,listener)
             GlobalScope.launch(Dispatchers.Main) {
                 imageView.setImageDrawable(drawable)

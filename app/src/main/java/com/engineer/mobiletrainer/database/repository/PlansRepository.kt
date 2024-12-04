@@ -4,7 +4,7 @@ import androidx.annotation.WorkerThread
 import com.engineer.mobiletrainer.database.entity.Plans
 import com.engineer.mobiletrainer.database.dao.PlansDao
 import com.engineer.mobiletrainer.database.entity.PlansExerciseCrossRef
-import com.engineer.mobiletrainer.database.entity.relations.PlansWithExercises
+import com.engineer.mobiletrainer.database.entity.relations.PlanWithExercises
 import com.engineer.mobiletrainer.database.entity.relations.PlansWithTrainingSessions
 import kotlinx.coroutines.flow.Flow
 
@@ -45,7 +45,7 @@ class PlansRepository(private val plansDao: PlansDao) {
     }
 
     @WorkerThread
-    suspend fun getPlansWithExercises(): MutableList<PlansWithExercises> {
-        return plansDao.getPlansWithExercises()
+    fun getPlanWithExercises(pid: Int): Flow<MutableList<PlanWithExercises>> {
+        return plansDao.getPlanWithExercises(pid)
     }
 }

@@ -5,13 +5,8 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/home2">
     <fragment
-        android:id="@+id/training"
-        android:name="com.engineer.mobiletrainer.Training"
-        android:label="fragment_training"
-        tools:layout="@layout/fragment_training" />
-    <fragment
         android:id="@+id/exerciseChoice"
-        android:name="com.engineer.mobiletrainer.ExerciseChoice"
+        android:name="com.engineer.mobiletrainer.fragments.ExerciseChoice"
         android:label="fragment_exercise_choice"
         tools:layout="@layout/fragment_exercise_choice" >
         <action
@@ -27,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/home2"
-        android:name="com.engineer.mobiletrainer.Home"
+        android:name="com.engineer.mobiletrainer.fragments.Home"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -40,12 +35,12 @@
     </fragment>
     <fragment
         android:id="@+id/settings2"
-        android:name="com.engineer.mobiletrainer.AppSettings"
+        android:name="com.engineer.mobiletrainer.fragments.AppSettings"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <activity
         android:id="@+id/trainingActivity"
-        android:name="com.engineer.mobiletrainer.TrainingActivity"
+        android:name="com.engineer.mobiletrainer.activities.TrainingActivity"
         android:label="fragment_training"
         tools:layout="@layout/fragment_training" />
     <action
@@ -57,7 +52,7 @@
         app:popExitAnim="@anim/slid_from_left" />
     <fragment
         android:id="@+id/mainPage"
-        android:name="com.engineer.mobiletrainer.MainPage"
+        android:name="com.engineer.mobiletrainer.fragments.MainPage"
         android:label="fragment_main_page"
         tools:layout="@layout/fragment_main_page" >
         <action
@@ -77,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/profile"
-        android:name="com.engineer.mobiletrainer.ProfilePage"
+        android:name="com.engineer.mobiletrainer.fragments.ProfilePage"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <action
@@ -96,7 +91,16 @@
         app:popExitAnim="@anim/slid_from_left" />
     <fragment
         android:id="@+id/plansFragment"
-        android:name="com.engineer.mobiletrainer.PlansFragment"
+        android:name="com.engineer.mobiletrainer.fragments.PlansFragment"
         android:label="fragment_plans"
-        tools:layout="@layout/fragment_plans" />
+        tools:layout="@layout/fragment_plans" >
+        <action
+            android:id="@+id/action_plansFragment_to_planDetails"
+            app:destination="@id/planDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/planDetails"
+        android:name="com.engineer.mobiletrainer.fragments.PlanDetails"
+        android:label="fragment_plan_details"
+        tools:layout="@layout/fragment_plan_details" />
 </navigation>

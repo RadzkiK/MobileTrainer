@@ -24,5 +24,5 @@ interface TrainingSessionDao {
 
     @Transaction
     @Query("SELECT * FROM training_sessions")
-    fun getTrainingSessionWithExercisesSessions(): MutableList<TrainingSessionWithExerciseSessions>
+    suspend fun getTrainingSessionWithExercisesSessions(): MutableList<TrainingSessionWithExerciseSessions>
 }

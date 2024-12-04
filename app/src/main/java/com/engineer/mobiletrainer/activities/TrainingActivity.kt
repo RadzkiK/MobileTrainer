@@ -1,11 +1,10 @@
-package com.engineer.mobiletrainer
+package com.engineer.mobiletrainer.activities
 
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.os.Process
 import android.view.SurfaceView
 import android.view.View
@@ -17,12 +16,12 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
+import com.engineer.mobiletrainer.R
 import com.engineer.mobiletrainer.camera.CameraSource
 import com.engineer.mobiletrainer.data.Device
 import com.engineer.mobiletrainer.ml.ModelType

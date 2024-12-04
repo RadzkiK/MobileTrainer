@@ -45,10 +45,7 @@ task downloadPoseClassifierModel(type: DownloadUrlTask) {
 
 task downloadModel {
     dependsOn downloadPosenetModel
-    dependsOn downloadMovenetLightningModel
-    dependsOn downloadMovenetThunderModel
     dependsOn downloadPoseClassifierModel
-    dependsOn downloadMovenetMultiPoseModel
 }
 
 class DownloadUrlTask extends DefaultTask {

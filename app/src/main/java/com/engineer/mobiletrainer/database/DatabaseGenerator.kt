@@ -6,6 +6,7 @@ import com.engineer.mobiletrainer.database.entity.Exercise
 import com.engineer.mobiletrainer.database.entity.Plans
 import com.engineer.mobiletrainer.database.entity.PlansExerciseCrossRef
 import com.engineer.mobiletrainer.viewmodels.PlansViewModel
+import java.lang.Thread.sleep
 
 class DatabaseGenerator(
     private val plansViewModel: PlansViewModel,
@@ -33,29 +34,20 @@ class DatabaseGenerator(
         plansViewModel.insertPlan(plan4)
         plansViewModel.insertPlan(plan5)
 
-        plansViewModel.allPlans.observe(activity, Observer { plans: List<Plans> ->
-            allPlans = plans
-            plan1 = allPlans.find { it.name?.equals("Push") == true }!!
-            plan2 = allPlans.find { it.name?.equals("Pull") == true }!!
-            plan3 = allPlans.find { it.name?.equals("Legs") == true }!!
-            plan4 = allPlans.find { it.name?.equals("Arms") == true }!!
-            plan5 = allPlans.find { it.name?.equals("Cardio") == true }!!
-        })
-
-        plansViewModel.getPlan("Push")
-        plan1 = plansViewModel.plan
-
-        plansViewModel.getPlan("Pull")
-        plan2 = plansViewModel.plan
-
-        plansViewModel.getPlan("Legs")
-        plan3 = plansViewModel.plan
-
-        plansViewModel.getPlan("Arms")
-        plan4 = plansViewModel.plan
-
-        plansViewModel.getPlan("Cardio")
-        plan5 = plansViewModel.plan
+//        plansViewModel.getPlan("Push")
+//        plan1 = plansViewModel.plan
+//
+//        plansViewModel.getPlan("Pull")
+//        plan2 = plansViewModel.plan
+//
+//        plansViewModel.getPlan("Legs")
+//        plan3 = plansViewModel.plan
+//
+//        plansViewModel.getPlan("Arms")
+//        plan4 = plansViewModel.plan
+//
+//        plansViewModel.getPlan("Cardio")
+//        plan5 = plansViewModel.plan
 
 
         //generating exercises
@@ -128,8 +120,19 @@ class DatabaseGenerator(
         plansViewModel.insertExercise(exercise32)
         plansViewModel.insertExercise(exercise33)
 
+        plansViewModel.allPlans.observe(activity, Observer { plans: List<Plans> ->
+            allPlans = plans
+            plan1 = allPlans.find { it.name?.equals("Push") == true }!!
+            plan2 = allPlans.find { it.name?.equals("Pull") == true }!!
+            plan3 = allPlans.find { it.name?.equals("Legs") == true }!!
+            plan4 = allPlans.find { it.name?.equals("Arms") == true }!!
+            plan5 = allPlans.find { it.name?.equals("Cardio") == true }!!
+        })
+
+
         plansViewModel.allExercises.observe(activity, Observer { exercises ->
             allExercises = exercises
+
 
             exercise1 = allExercises.find {it.name?.equals("Benchpress") == true}!!
 
@@ -263,104 +266,104 @@ class DatabaseGenerator(
 
         })
 
-        plansViewModel.getExercise("Benchpress")
-        exercise1 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Chest Dips")
-        exercise2 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Dips")
-        exercise3 = plansViewModel.exercise
-
-        plansViewModel.getExercise("OverHeadPress")
-        exercise4 = plansViewModel.exercise
-
-        plansViewModel.getExercise("PushUps")
-        exercise5 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Bent Over Row")
-        exercise6 = plansViewModel.exercise
-
-        plansViewModel.getExercise("PullUps")
-        exercise7 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Lat Pull Down")
-        exercise8 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Good Mornings")
-        exercise9 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Arnold Press")
-        exercise10 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Dumbbell Lateral Raise")
-        exercise11 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Cable Lateral Raise")
-        exercise12 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Squat")
-        exercise13 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Narrow Hack Squat")
-        exercise14 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Leg Extension")
-        exercise15 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Dumbbell Lunge")
-        exercise16 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Deadlift")
-        exercise17 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Standing Calf Raise")
-        exercise18 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Standing Dumbbell Curl")
-        exercise19 = plansViewModel.exercise
-
-        plansViewModel.getExercise("One Arm Dumbbell Preacher Curl")
-        exercise20 = plansViewModel.exercise
-
-        plansViewModel.getExercise("V-bar Cable Curl")
-        exercise21 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Rope Tricep Extension")
-        exercise22 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Reverse Single Arm Extension")
-        exercise23 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Seated French Press")
-        exercise24 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Hanging Leg Raise")
-        exercise25 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Plank")
-        exercise26 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Barbell Wrist Curl")
-        exercise27 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Reverse Barbell Wrist Curl")
-        exercise28 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Running")
-        exercise29 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Bicycle Riding")
-        exercise30 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Rope Jumping")
-        exercise31 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Burpees")
-        exercise32 = plansViewModel.exercise
-
-        plansViewModel.getExercise("Jumping Jacks")
-        exercise33 = plansViewModel.exercise
+//        plansViewModel.getExercise("Benchpress")
+//        exercise1 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Chest Dips")
+//        exercise2 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Dips")
+//        exercise3 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("OverHeadPress")
+//        exercise4 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("PushUps")
+//        exercise5 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Bent Over Row")
+//        exercise6 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("PullUps")
+//        exercise7 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Lat Pull Down")
+//        exercise8 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Good Mornings")
+//        exercise9 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Arnold Press")
+//        exercise10 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Dumbbell Lateral Raise")
+//        exercise11 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Cable Lateral Raise")
+//        exercise12 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Squat")
+//        exercise13 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Narrow Hack Squat")
+//        exercise14 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Leg Extension")
+//        exercise15 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Dumbbell Lunge")
+//        exercise16 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Deadlift")
+//        exercise17 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Standing Calf Raise")
+//        exercise18 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Standing Dumbbell Curl")
+//        exercise19 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("One Arm Dumbbell Preacher Curl")
+//        exercise20 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("V-bar Cable Curl")
+//        exercise21 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Rope Tricep Extension")
+//        exercise22 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Reverse Single Arm Extension")
+//        exercise23 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Seated French Press")
+//        exercise24 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Hanging Leg Raise")
+//        exercise25 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Plank")
+//        exercise26 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Barbell Wrist Curl")
+//        exercise27 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Reverse Barbell Wrist Curl")
+//        exercise28 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Running")
+//        exercise29 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Bicycle Riding")
+//        exercise30 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Rope Jumping")
+//        exercise31 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Burpees")
+//        exercise32 = plansViewModel.exercise
+//
+//        plansViewModel.getExercise("Jumping Jacks")
+//        exercise33 = plansViewModel.exercise
 
 
 

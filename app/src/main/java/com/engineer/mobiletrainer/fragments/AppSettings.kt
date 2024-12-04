@@ -1,4 +1,4 @@
-package com.engineer.mobiletrainer
+package com.engineer.mobiletrainer.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +12,8 @@ import android.widget.Spinner
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import com.engineer.mobiletrainer.MobileTrainerApplication
+import com.engineer.mobiletrainer.R
 import com.engineer.mobiletrainer.database.entity.Settings
 import com.engineer.mobiletrainer.viewmodels.SettingsViewModel
 import com.engineer.mobiletrainer.viewmodels.SettingsViewModelFactory

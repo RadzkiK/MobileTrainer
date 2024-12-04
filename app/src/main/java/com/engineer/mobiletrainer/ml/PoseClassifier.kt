@@ -29,13 +29,13 @@ class PoseClassifier(
     private val output = interpreter.getOutputTensor(0).shape()
 
     companion object {
-        private const val MODEL_FILENAME = "exercisesPosesNoPlank_classifier.tflite"
-        private const val LABELS_FILENAME = "exercisesPosesNoPlank_labels.txt"
+        private const val MODEL_FILENAME = "exercisesPoses2_classifier.tflite"
+        private const val LABELS_FILENAME = "exercisesPoses2_labels.txt"
         private const val CPU_NUM_THREADS = 4
-        private lateinit var model: ExercisesposesnoplankClassifier
+        //private lateinit var model: Exercisespose2Classifier
 
         fun create(context: Context): PoseClassifier {
-            model = com.engineer.mobiletrainer.ml.ExercisesposesnoplankClassifier.newInstance(context)
+            //model = com.engineer.mobiletrainer.ml.ExercisesposesnoplankClassifier.newInstance(context)
             val options = Interpreter.Options().apply {
                 setNumThreads(CPU_NUM_THREADS)
             }

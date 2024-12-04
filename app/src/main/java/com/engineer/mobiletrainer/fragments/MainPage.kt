@@ -1,4 +1,4 @@
-package com.engineer.mobiletrainer
+package com.engineer.mobiletrainer.fragments
 
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.findNavController
+import com.engineer.mobiletrainer.R
 import com.engineer.mobiletrainer.viewmodels.MainPageViewModel
 
 class MainPage : Fragment() {
