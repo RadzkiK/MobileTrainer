@@ -25,6 +25,7 @@ import com.engineer.mobiletrainer.viewmodels.PlansViewModelFactory
 import com.engineer.mobiletrainer.viewmodels.PlansViewModel
 import com.engineer.mobiletrainer.viewmodels.ProfileViewModel
 import com.engineer.mobiletrainer.viewmodels.ProfileViewModelFactory
+import java.lang.Thread.sleep
 
 class MainActivity : AppCompatActivity() {
 
@@ -79,7 +80,12 @@ class MainActivity : AppCompatActivity() {
                 val databaseGenerator = DatabaseGenerator(plansViewModel, this)
                 try {
                     databaseGenerator.generatePlans()
-                } catch (e: IllegalStateException) {
+                    sleep(100)
+                    databaseGenerator.generateExercises()
+                    sleep(100)
+                    databaseGenerator.matchPlansAndExercises()
+
+                } catch (e: Exception) {
                     val builder = AlertDialog.Builder(this)
                     builder.setTitle("Error")
                     builder.setMessage("Run application again")

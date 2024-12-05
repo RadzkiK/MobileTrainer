@@ -17,10 +17,12 @@ import kotlin.coroutines.coroutineContext
 
 class ExerciseAdapter(var exercises: List<Exercise>): RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder>() {
     inner class ExerciseViewHolder(view: View):RecyclerView.ViewHolder(view) {
-        val textView: TextView
+        val name: TextView
+        val desc: TextView
 
         init {
-            textView = view.findViewById(R.id.textView)
+            name = view.findViewById(R.id.recycler_view_exercise_name)
+            desc = view.findViewById(R.id.recycler_view_exercise_desc)
             view.setOnClickListener{
                 
             }
@@ -36,7 +38,7 @@ class ExerciseAdapter(var exercises: List<Exercise>): RecyclerView.Adapter<Exerc
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_exercise, parent, false)
 
         return ExerciseViewHolder(view)
     }
@@ -46,7 +48,8 @@ class ExerciseAdapter(var exercises: List<Exercise>): RecyclerView.Adapter<Exerc
     }
 
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
-        holder.textView.text = exercises[position].name
+        holder.name.text = exercises[position].name
+        holder.desc.text = exercises[position].desc
         
         //Set onClickListener for item
         holder.itemView.setOnClickListener{

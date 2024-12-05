@@ -13,19 +13,60 @@ class DatabaseGenerator(
     private val activity: AppCompatActivity
 ) {
 
+    var allPlans: List<Plans> = emptyList()
+    var allExercises: List<Exercise> = emptyList()
+
+    var plan1 = Plans("Push")
+    var plan2 = Plans("Pull")
+    var plan3 = Plans("Legs")
+    var plan4 = Plans("Arms")
+    var plan5 = Plans("Cardio")
+
+    var exercise1 = Exercise("Benchpress")
+    var exercise2 = Exercise("Chest Dips")
+    var exercise3 = Exercise("Dips")
+    var exercise4 = Exercise("OverHeadPress")
+    var exercise5 = Exercise("PushUps")
+    var exercise6 = Exercise("Bent Over Row")
+    var exercise7 = Exercise("PullUps")
+    var exercise8 = Exercise("Lat Pull Down")
+    var exercise9 = Exercise("Good Mornings")
+    var exercise10 = Exercise("Arnold Press")
+    var exercise11 = Exercise("Dumbbell Lateral Raise")
+    var exercise12 = Exercise("Cable Lateral Raise")
+    var exercise13 = Exercise("Squat")
+    var exercise14 = Exercise("Narrow Hack Squat")
+    var exercise15 = Exercise("Leg Extension")
+    var exercise16 = Exercise("Dumbbell Lunge")
+    var exercise17 = Exercise("Deadlift")
+    var exercise18 = Exercise("Standing Calf Raise")
+    var exercise19 = Exercise("Standing Dumbbell Curl")
+    var exercise20 = Exercise("One Arm Dumbbell Preacher Curl")
+    var exercise21 = Exercise("V-bar Cable Curl")
+    var exercise22 = Exercise("Rope Tricep Extension")
+    var exercise23 = Exercise("Reverse Single Arm Extension")
+    var exercise24 = Exercise("Seated French Press")
+    var exercise25 = Exercise("Hanging Leg Raise")
+    var exercise26 = Exercise("Plank")
+    var exercise27 = Exercise("Barbell Wrist Curl")
+    var exercise28 = Exercise("Reverse Barbell Wrist Curl")
+    var exercise29 = Exercise("Running")
+    var exercise30 = Exercise("Bicycle Riding")
+    var exercise31 = Exercise("Rope Jumping")
+    var exercise32 = Exercise("Burpees")
+    var exercise33 = Exercise("Jumping Jacks")
+
     fun generatePlans() {
         //generating plans
-        var plan1 = Plans("Push")
-        var plan2 = Plans("Pull")
-        var plan3 = Plans("Legs")
-        var plan4 = Plans("Arms")
-        var plan5 = Plans("Cardio")
-        var allPlans: List<Plans> = emptyList()
 
-        plan1.desc = "Exercise plan focusing on pushing movement in upper body. Training mostly chest, triceps, shoulders"
-        plan2.desc = "Exercise plan focusing on pulling movement in upper body. Training mostly back. biceps, forearms"
-        plan3.desc = "Exercise plan focusing on legs. Training mostly quadriceps, biceps femoris, gluteus maximus"
-        plan4.desc = "Exercise plan focusing on arms. Training mostly biceps, triceps, forearms, shoulders"
+        plan1.desc =
+            "Exercise plan focusing on pushing movement in upper body. Training mostly chest, triceps, shoulders"
+        plan2.desc =
+            "Exercise plan focusing on pulling movement in upper body. Training mostly back. biceps, forearms"
+        plan3.desc =
+            "Exercise plan focusing on legs. Training mostly quadriceps, biceps femoris, gluteus maximus"
+        plan4.desc =
+            "Exercise plan focusing on arms. Training mostly biceps, triceps, forearms, shoulders"
         plan5.desc = "Exercise plan focusing on improving condition."
 
         plansViewModel.insertPlan(plan1)
@@ -34,57 +75,224 @@ class DatabaseGenerator(
         plansViewModel.insertPlan(plan4)
         plansViewModel.insertPlan(plan5)
 
-//        plansViewModel.getPlan("Push")
-//        plan1 = plansViewModel.plan
-//
-//        plansViewModel.getPlan("Pull")
-//        plan2 = plansViewModel.plan
-//
-//        plansViewModel.getPlan("Legs")
-//        plan3 = plansViewModel.plan
-//
-//        plansViewModel.getPlan("Arms")
-//        plan4 = plansViewModel.plan
-//
-//        plansViewModel.getPlan("Cardio")
-//        plan5 = plansViewModel.plan
+    }
 
-
+    fun generateExercises() {
         //generating exercises
-        var exercise1 = Exercise("Benchpress")
-        var exercise2 = Exercise("Chest Dips")
-        var exercise3 = Exercise("Dips")
-        var exercise4 = Exercise("OverHeadPress")
-        var exercise5 = Exercise("PushUps")
-        var exercise6 = Exercise("Bent Over Row")
-        var exercise7 = Exercise("PullUps")
-        var exercise8 = Exercise("Lat Pull Down")
-        var exercise9 = Exercise("Good Mornings")
-        var exercise10 = Exercise("Arnold Press")
-        var exercise11 = Exercise("Dumbbell Lateral Raise")
-        var exercise12 = Exercise("Cable Lateral Raise")
-        var exercise13 = Exercise("Squat")
-        var exercise14 = Exercise("Narrow Hack Squat")
-        var exercise15 = Exercise("Leg Extension")
-        var exercise16 = Exercise("Dumbbell Lunge")
-        var exercise17 = Exercise("Deadlift")
-        var exercise18 = Exercise("Standing Calf Raise")
-        var exercise19 = Exercise("Standing Dumbbell Curl")
-        var exercise20 = Exercise("One Arm Dumbbell Preacher Curl")
-        var exercise21 = Exercise("V-bar Cable Curl")
-        var exercise22 = Exercise("Rope Tricep Extension")
-        var exercise23 = Exercise("Reverse Single Arm Extension")
-        var exercise24 = Exercise("Seated French Press")
-        var exercise25 = Exercise("Hanging Leg Raise")
-        var exercise26 = Exercise("Plank")
-        var exercise27 = Exercise("Barbell Wrist Curl")
-        var exercise28 = Exercise("Reverse Barbell Wrist Curl")
-        var exercise29 = Exercise("Running")
-        var exercise30 = Exercise("Bicycle Riding")
-        var exercise31 = Exercise("Rope Jumping")
-        var exercise32 = Exercise("Burpees")
-        var exercise33 = Exercise("Jumping Jacks")
-        var allExercises: List<Exercise> = emptyList()
+
+        exercise1.desc = """
+    * Lie on a flat bench with your feet flat on the floor.
+    * Grip the barbell slightly wider than shoulder-width apart.
+    * Lower the barbell to your chest, keeping your elbows slightly tucked.
+    * Push the barbell back up to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise2.desc = """
+    * Grip parallel bars with your hands slightly wider than shoulder-width apart.
+    * Lower your body by bending your elbows until your chest is near the bars.
+    * Push yourself back up to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise3.desc = """
+    * Grip parallel bars with your hands shoulder-width apart.
+    * Lower your body by bending your elbows until your upper arms are parallel to the floor.
+    * Push yourself back up to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise4.desc = """
+    * Stand with your feet shoulder-width apart, holding a barbell or dumbbells at shoulder height.
+    * Press the weight overhead, extending your arms fully.
+    * Lower the weight back down to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise5.desc = """
+    * Start in a plank position with your hands shoulder-width apart.
+    * Lower your body by bending your elbows until your chest touches the floor.
+    * Push yourself back up to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise6.desc = """
+    * Stand with your feet shoulder-width apart, bending at the hips with a flat back.
+    * Hold a barbell or dumbbells with an overhand grip.
+    * Pull the weight towards your torso, keeping your elbows close to your body.
+    * Lower the weight back down to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise7.desc = """
+    * Grip a pull-up bar with an overhand grip, slightly wider than shoulder-width apart.
+    * Hang from the bar with your arms fully extended.
+    * Pull yourself up until your chin is above the bar.
+    * Lower yourself back down to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise8.desc = """
+    * Sit on the lat pull-down machine with your feet flat on the floor.
+    * Grip the bar with an overhand grip, slightly wider than shoulder-width apart.
+    * Pull the bar down towards your chest, keeping your back straight.
+    * Return the bar to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise9.desc = """
+    * Stand with your feet shoulder-width apart, with a barbell across your upper back.
+    * Bend at the hips, keeping your back straight, until your torso is almost parallel to the floor.
+    * Return to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise10.desc = """
+    * Sit on a bench with your feet flat on the floor, holding dumbbells at shoulder height.
+    * Rotate the dumbbells as you press them overhead, ending with your palms facing forward.
+    * Lower the dumbbells back down to the starting position, reversing the rotation.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise11.desc = """
+    * Stand with your feet shoulder-width apart, holding dumbbells at your sides.
+    * Raise the dumbbells out to the sides, keeping your elbows slightly bent.
+    * Lower the dumbbells back down to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise12.desc = """
+    * Stand with your feet shoulder-width apart, holding cable handles with your arms at your sides.
+    * Raise the handles out to the sides, keeping your elbows slightly bent.
+    * Lower the handles back down to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise13.desc = """
+    * Stand with your feet shoulder-width apart, toes pointing slightly outward.
+    * Lower your body by bending your knees and hips, as if sitting back into a chair.
+    * Keep your chest up and your back straight.
+    * Return to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise14.desc = """
+    * Stand on the hack squat machine with your feet close together, toes pointing slightly outward.
+    * Lower your body by bending your knees, keeping your back straight.
+    * Return to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise15.desc = """
+    * Sit on the leg extension machine with your feet under the pad.
+    * Extend your legs, keeping your back straight.
+    * Lower the weight back down to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise16.desc = """
+    * Stand with your feet shoulder-width apart, holding dumbbells at your sides.
+    * Step forward with one leg and lower your body until both knees are bent at a 90-degree angle.
+    * Push off with your front foot and return to the starting position.
+    * Repeat with the other leg.
+    * Continue alternating legs for the desired number of repetitions.
+"""
+        exercise17.desc = """
+    * Stand with your feet hip-width apart, with a barbell in front of you.
+    * Bend down and grip the barbell with an overhand grip, slightly wider than shoulder-width apart.
+    * Keep your back straight and your core engaged.
+    * Lift the barbell off the ground by extending your hips and knees.
+    * Lower the barbell back down to the ground.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise18.desc = """
+    * Stand with your feet shoulder-width apart, holding dumbbells or a barbell for added resistance.
+    * Raise your heels off the ground, contracting your calf muscles.
+    * Lower your heels back down to the ground.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise19.desc = """
+    * Stand with your feet shoulder-width apart, holding dumbbells at your sides.
+    * Curl the dumbbells towards your shoulders, keeping your elbows close to your body.
+    * Lower the dumbbells back down to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise20.desc = """
+    * Sit on a preacher curl bench with your chest against the pad.
+    * Hold a dumbbell in one hand and place your upper arm on the pad.
+    * Curl the dumbbell towards your shoulder, keeping your elbow close to the pad.
+    * Lower the dumbbell back down to the starting position.
+    * Repeat for the desired number of repetitions.
+    * Switch arms and repeat.
+"""
+        exercise21.desc = """
+    * Stand facing a cable machine with a V-bar attachment.
+    * Grip the V-bar with an underhand grip, shoulder-width apart.
+    * Curl the V-bar towards your shoulders, keeping your elbows close to your body.
+    * Lower the V-bar back down to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise22.desc = """
+    * Stand facing a cable machine with a rope attachment.
+    * Grip the ends of the rope with an overhand grip.
+    * Extend your arms down, keeping your elbows close to your body.
+    * Return to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise23.desc = """
+    * Sit on a bench with your feet flat on the floor.
+    * Hold a dumbbell in one hand and place your upper arm on your thigh, with your elbow bent at a 90-degree angle.
+    * Extend your arm back, keeping your elbow close to your body.
+    * Return to the starting position.
+    * Repeat for the desired number of repetitions.
+    * Switch arms and repeat.
+"""
+        exercise24.desc = """
+    * Sit on a bench with your feet flat on the floor.
+    * Hold a barbell or dumbbells overhead with your arms extended.
+    * Lower the weight behind your head by bending your elbows.
+    * Extend your arms back up to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise25.desc = """
+    * Hang from a pull-up bar with an overhand grip.
+    * Raise your legs towards your chest, keeping your core engaged.
+    * Lower your legs back down to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise26.desc = """
+    * Start in a push-up position with your forearms on the floor and your body in a straight line.
+    * Hold this position for the desired amount of time.
+"""
+        exercise27.desc = """
+    * Sit on a bench with your forearms resting on your thighs, palms facing up.
+    * Hold a barbell with an overhand grip.
+    * Curl the barbell upwards by flexing your wrists.
+    * Lower the barbell back down to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise28.desc = """
+    * Sit on a bench with your forearms resting on your thighs, palms facing down.
+    * Hold a barbell with an underhand grip.
+    * Curl the barbell upwards by extending your wrists.
+    * Lower the barbell back down to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise29.desc = """
+    * Maintain a comfortable pace and stride.
+    * Focus on proper breathing and posture.
+    * Gradually increase distance and intensity over time.
+"""
+        exercise30.desc = """
+    * Adjust the seat height for proper leg extension.
+    * Maintain a steady pedaling rhythm.
+    * Vary terrain and intensity for a challenging workout.
+"""
+        exercise31.desc = """
+    * Use a rope of appropriate length.
+    * Jump with both feet together, clearing the rope.
+    * Maintain a consistent rhythm and pace.
+"""
+        exercise32.desc = """
+    * Start in a standing position.
+    * Drop down into a squat position with your hands on the floor.
+    * Kick your feet back into a plank position.
+    * Do a push-up.
+    * Return to the squat position.
+    * Jump up into the air.
+    * Repeat for the desired number of repetitions.
+"""
+        exercise33.desc = """
+    * Stand with your feet together and your arms at your sides.
+    * Jump while spreading your legs and raising your arms overhead.
+    * Return to the starting position.
+    * Repeat for the desired number of repetitions.
+"""
 
         plansViewModel.insertExercise(exercise1)
         plansViewModel.insertExercise(exercise2)
@@ -119,86 +327,99 @@ class DatabaseGenerator(
         plansViewModel.insertExercise(exercise31)
         plansViewModel.insertExercise(exercise32)
         plansViewModel.insertExercise(exercise33)
+    }
+
+    fun matchPlansAndExercises() {
 
         plansViewModel.allPlans.observe(activity, Observer { plans: List<Plans> ->
             allPlans = plans
-            plan1 = allPlans.find { it.name?.equals("Push") == true }!!
-            plan2 = allPlans.find { it.name?.equals("Pull") == true }!!
-            plan3 = allPlans.find { it.name?.equals("Legs") == true }!!
-            plan4 = allPlans.find { it.name?.equals("Arms") == true }!!
-            plan5 = allPlans.find { it.name?.equals("Cardio") == true }!!
+            if(allPlans.isNotEmpty()) {
+                plan1 = allPlans.find { it.name?.equals("Push") == true }!!
+                plan2 = allPlans.find { it.name?.equals("Pull") == true }!!
+                plan3 = allPlans.find { it.name?.equals("Legs") == true }!!
+                plan4 = allPlans.find { it.name?.equals("Arms") == true }!!
+                plan5 = allPlans.find { it.name?.equals("Cardio") == true }!!
+            }
         })
 
 
         plansViewModel.allExercises.observe(activity, Observer { exercises ->
             allExercises = exercises
 
+            if(allExercises.isNotEmpty()) {
+                exercise1 = allExercises.find { it.name?.equals("Benchpress") == true }!!
 
-            exercise1 = allExercises.find {it.name?.equals("Benchpress") == true}!!
+                exercise2 = allExercises.find { it.name?.equals("Chest Dips") == true }!!
 
-            exercise2 = allExercises.find {it.name?.equals("Chest Dips") == true}!!
+                exercise3 = allExercises.find { it.name?.equals("Dips") == true }!!
 
-            exercise3 = allExercises.find {it.name?.equals("Dips") == true}!!
+                exercise4 = allExercises.find { it.name?.equals("OverHeadPress") == true }!!
 
-            exercise4 = allExercises.find {it.name?.equals("OverHeadPress") == true}!!
+                exercise5 = allExercises.find { it.name?.equals("PushUps") == true }!!
 
-            exercise5 = allExercises.find {it.name?.equals("PushUps") == true}!!
+                exercise6 = allExercises.find { it.name?.equals("Bent Over Row") == true }!!
 
-            exercise6 = allExercises.find {it.name?.equals("Bent Over Row") == true}!!
+                exercise7 = allExercises.find { it.name?.equals("PullUps") == true }!!
 
-            exercise7 = allExercises.find {it.name?.equals("PullUps") == true}!!
+                exercise8 = allExercises.find { it.name?.equals("Lat Pull Down") == true }!!
 
-            exercise8 = allExercises.find {it.name?.equals("Lat Pull Down") == true}!!
+                exercise9 = allExercises.find { it.name?.equals("Good Mornings") == true }!!
 
-            exercise9 = allExercises.find {it.name?.equals("Good Mornings") == true}!!
+                exercise10 = allExercises.find { it.name?.equals("Arnold Press") == true }!!
 
-            exercise10 = allExercises.find {it.name?.equals("Arnold Press") == true}!!
+                exercise11 =
+                    allExercises.find { it.name?.equals("Dumbbell Lateral Raise") == true }!!
 
-            exercise11 = allExercises.find {it.name?.equals("Dumbbell Lateral Raise") == true}!!
+                exercise12 = allExercises.find { it.name?.equals("Cable Lateral Raise") == true }!!
 
-            exercise12 = allExercises.find {it.name?.equals("Cable Lateral Raise") == true}!!
+                exercise13 = allExercises.find { it.name?.equals("Squat") == true }!!
 
-            exercise13 = allExercises.find {it.name?.equals("Squat") == true}!!
+                exercise14 = allExercises.find { it.name?.equals("Narrow Hack Squat") == true }!!
 
-            exercise14 = allExercises.find {it.name?.equals("Narrow Hack Squat") == true}!!
+                exercise15 = allExercises.find { it.name?.equals("Leg Extension") == true }!!
 
-            exercise15 = allExercises.find {it.name?.equals("Leg Extension") == true}!!
+                exercise16 = allExercises.find { it.name?.equals("Dumbbell Lunge") == true }!!
 
-            exercise16 = allExercises.find {it.name?.equals("Dumbbell Lunge") == true}!!
+                exercise17 = allExercises.find { it.name?.equals("Deadlift") == true }!!
 
-            exercise17 = allExercises.find {it.name?.equals("Deadlift") == true}!!
+                exercise18 = allExercises.find { it.name?.equals("Standing Calf Raise") == true }!!
 
-            exercise18 = allExercises.find {it.name?.equals("Standing Calf Raise") == true}!!
+                exercise19 =
+                    allExercises.find { it.name?.equals("Standing Dumbbell Curl") == true }!!
 
-            exercise19 = allExercises.find {it.name?.equals("Standing Dumbbell Curl") == true}!!
+                exercise20 =
+                    allExercises.find { it.name?.equals("One Arm Dumbbell Preacher Curl") == true }!!
 
-            exercise20 = allExercises.find {it.name?.equals("One Arm Dumbbell Preacher Curl") == true}!!
+                exercise21 = allExercises.find { it.name?.equals("V-bar Cable Curl") == true }!!
 
-            exercise21 = allExercises.find {it.name?.equals("V-bar Cable Curl") == true}!!
+                exercise22 =
+                    allExercises.find { it.name?.equals("Rope Tricep Extension") == true }!!
 
-            exercise22 = allExercises.find {it.name?.equals("Rope Tricep Extension") == true}!!
+                exercise23 =
+                    allExercises.find { it.name?.equals("Reverse Single Arm Extension") == true }!!
 
-            exercise23 = allExercises.find {it.name?.equals("Reverse Single Arm Extension") == true}!!
+                exercise24 = allExercises.find { it.name?.equals("Seated French Press") == true }!!
 
-            exercise24 = allExercises.find {it.name?.equals("Seated French Press") == true}!!
+                exercise25 = allExercises.find { it.name?.equals("Hanging Leg Raise") == true }!!
 
-            exercise25 = allExercises.find {it.name?.equals("Hanging Leg Raise") == true}!!
+                exercise26 = allExercises.find { it.name?.equals("Plank") == true }!!
 
-            exercise26 = allExercises.find {it.name?.equals("Plank") == true}!!
+                exercise27 = allExercises.find { it.name?.equals("Barbell Wrist Curl") == true }!!
 
-            exercise27 = allExercises.find {it.name?.equals("Barbell Wrist Curl") == true}!!
+                exercise28 =
+                    allExercises.find { it.name?.equals("Reverse Barbell Wrist Curl") == true }!!
 
-            exercise28 = allExercises.find {it.name?.equals("Reverse Barbell Wrist Curl") == true}!!
+                exercise29 = allExercises.find { it.name?.equals("Running") == true }!!
 
-            exercise29 = allExercises.find {it.name?.equals("Running") == true}!!
+                exercise30 = allExercises.find { it.name?.equals("Bicycle Riding") == true }!!
 
-            exercise30 = allExercises.find {it.name?.equals("Bicycle Riding") == true}!!
+                exercise31 = allExercises.find { it.name?.equals("Rope Jumping") == true }!!
 
-            exercise31 = allExercises.find {it.name?.equals("Rope Jumping") == true}!!
+                exercise32 = allExercises.find { it.name?.equals("Burpees") == true }!!
 
-            exercise32 = allExercises.find {it.name?.equals("Burpees") == true}!!
+                exercise33 = allExercises.find { it.name?.equals("Jumping Jacks") == true }!!
 
-            exercise33 = allExercises.find {it.name?.equals("Jumping Jacks") == true}!!
+            }
 
             //making pairs to fill the plans
             //plan1
@@ -266,110 +487,6 @@ class DatabaseGenerator(
 
         })
 
-//        plansViewModel.getExercise("Benchpress")
-//        exercise1 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Chest Dips")
-//        exercise2 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Dips")
-//        exercise3 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("OverHeadPress")
-//        exercise4 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("PushUps")
-//        exercise5 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Bent Over Row")
-//        exercise6 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("PullUps")
-//        exercise7 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Lat Pull Down")
-//        exercise8 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Good Mornings")
-//        exercise9 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Arnold Press")
-//        exercise10 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Dumbbell Lateral Raise")
-//        exercise11 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Cable Lateral Raise")
-//        exercise12 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Squat")
-//        exercise13 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Narrow Hack Squat")
-//        exercise14 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Leg Extension")
-//        exercise15 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Dumbbell Lunge")
-//        exercise16 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Deadlift")
-//        exercise17 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Standing Calf Raise")
-//        exercise18 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Standing Dumbbell Curl")
-//        exercise19 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("One Arm Dumbbell Preacher Curl")
-//        exercise20 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("V-bar Cable Curl")
-//        exercise21 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Rope Tricep Extension")
-//        exercise22 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Reverse Single Arm Extension")
-//        exercise23 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Seated French Press")
-//        exercise24 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Hanging Leg Raise")
-//        exercise25 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Plank")
-//        exercise26 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Barbell Wrist Curl")
-//        exercise27 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Reverse Barbell Wrist Curl")
-//        exercise28 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Running")
-//        exercise29 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Bicycle Riding")
-//        exercise30 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Rope Jumping")
-//        exercise31 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Burpees")
-//        exercise32 = plansViewModel.exercise
-//
-//        plansViewModel.getExercise("Jumping Jacks")
-//        exercise33 = plansViewModel.exercise
-
-
-
-
-
     }
-
 
 }

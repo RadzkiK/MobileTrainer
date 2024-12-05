@@ -9,8 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.engineer.mobiletrainer.MobileTrainerApplication
 import com.engineer.mobiletrainer.R
@@ -41,6 +44,8 @@ class PlanDetails : Fragment() {
     private var desc: Editable = Editable.Factory.getInstance().newEditable("")
     private var exerciseList: List<Exercise> = emptyList<Exercise>()
     private lateinit var exerciseAdapter: ExerciseAdapter
+    private lateinit var recyclerView: RecyclerView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +65,8 @@ class PlanDetails : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_plan_details, container, false)
 
+        recyclerView = view.findViewById(R.id.planDetails_exerciseRecyclerView)
+
         planName = view.findViewById(R.id.planDetails_planName)
         planName.text = plan.name
 
@@ -78,10 +85,23 @@ class PlanDetails : Fragment() {
         plansViewModel.getPlanWithExercises(plan.pid)
 
         plansViewModel.planWithExercises.observe(requireActivity(), Observer { list ->
-            exerciseList = list[0].exercises
+            if(list.isEmpty()) {
+                //do nothing
+            } else {
+                exerciseList = list[0].exercises
+            }
+            recyclerView.layoutManager = layoutManager
+
+            exerciseAdapter = ExerciseAdapter(exerciseList)
+            recyclerView.adapter = exerciseAdapter
             println(list.size)
             println(list)
             println("Exercise List: " + exerciseList)
+
+            exerciseAdapter.onItemClick = {
+                val bundle = bundleOf("exercise" to it)
+                view.findNavController().navigate(R.id.action_planDetails_to_exerciseDetails, bundle)
+            }
         })
 
 
