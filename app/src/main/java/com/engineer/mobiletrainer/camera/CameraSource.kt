@@ -17,30 +17,43 @@ limitations under the License.
 package com.engineer.mobiletrainer.camera
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.ImageFormat
 import android.graphics.Matrix
 import android.graphics.Rect
+import android.graphics.Paint
 import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraDevice
 import android.hardware.camera2.CameraManager
+import android.hardware.camera2.CaptureRequest
+import android.hardware.camera2.TotalCaptureResult
+import android.media.Image
 import android.media.ImageReader
+import android.os.Environment
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
+import android.util.SparseIntArray
 import android.view.Surface
 import android.view.SurfaceView
+import androidx.core.graphics.green
 import kotlinx.coroutines.suspendCancellableCoroutine
 import com.engineer.mobiletrainer.VisualizationUtils
 import com.engineer.mobiletrainer.YuvToRgbConverter
 import com.engineer.mobiletrainer.data.Person
 import com.engineer.mobiletrainer.ml.PoseClassifier
 import com.engineer.mobiletrainer.ml.PoseDetector
+import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import kotlin.io.path.exists
 
 class CameraSource(
     private val surfaceView: SurfaceView,
@@ -115,6 +128,7 @@ class CameraSource(
                     rotateMatrix, false
                 )
                 processImage(rotatedBitmap)
+                Log.d(TAG, "Processed image: ${rotatedBitmap}")
                 image.close()
             }
         }, imageReaderHandler)
@@ -229,6 +243,13 @@ class CameraSource(
         framesPerSecond = 0
     }
 
+    fun stopPreview() {
+        session?.stopRepeating()
+        session?.close()
+        camera?.close()
+        camera = null
+    }
+
     // process image
     private fun processImage(bitmap: Bitmap) {
         val persons = mutableListOf<Person>()
@@ -256,7 +277,8 @@ class CameraSource(
         if (persons.isNotEmpty()) {
             listener?.onDetectedInfo(persons[0].score, classificationResult)
         }
-        visualize(persons, bitmap)
+        //visualize(persons, bitmap)
+        visualize(persons, bitmap, classificationResult)
     }
 
     private fun visualize(persons: List<Person>, bitmap: Bitmap) {
@@ -294,6 +316,70 @@ class CameraSource(
                 outputBitmap, Rect(0, 0, outputBitmap.width, outputBitmap.height),
                 Rect(left, top, right, bottom), null
             )
+
+            val file = saveBitmapToFile(surfaceView.context, outputBitmap, "image_${outputBitmap}.jpeg")
+            Log.d(TAG, "Saved image: ${file?.absolutePath}")
+
+            surfaceView.holder.unlockCanvasAndPost(canvas)
+        }
+    }
+
+    private fun visualize(persons: List<Person>, bitmap: Bitmap, result: List<Pair<String, Float>>? ) {
+
+        val outputBitmap = VisualizationUtils.drawBodyKeypoints(
+            bitmap,
+            persons.filter { it.score > MIN_CONFIDENCE }, isTrackerEnabled
+        )
+
+        val newcanvas = Canvas(outputBitmap)
+        val holder = surfaceView.holder
+        val surfaceCanvas = holder.lockCanvas()
+        if(result != null) {
+            val paint = Paint().apply {
+                color = Color.GREEN
+                textSize = 30f
+            }
+
+            var yOffset = paint.textSize // Start at the top with the first line
+
+            for ((text, value) in result) {
+                val displayText = "$text: $value.4f"
+                newcanvas.drawText(displayText, 10f, yOffset, paint) // 10f is the x-offset
+                yOffset += paint.textSize * 1.2f // Adjust line spacing as needed
+
+            }
+            Log.d(TAG, "${result}")
+        }
+        surfaceCanvas?.let { canvas ->
+            val screenWidth: Int
+            val screenHeight: Int
+            val left: Int
+            val top: Int
+
+            if (canvas.height > canvas.width) {
+                val ratio = outputBitmap.height.toFloat() / outputBitmap.width
+                screenWidth = canvas.width
+                left = 0
+                screenHeight = (canvas.width * ratio).toInt()
+                top = (canvas.height - screenHeight) / 2
+            } else {
+                val ratio = outputBitmap.width.toFloat() / outputBitmap.height
+                screenHeight = canvas.height
+                top = 0
+                screenWidth = (canvas.height * ratio).toInt()
+                left = (canvas.width - screenWidth) / 2
+            }
+            val right: Int = left + screenWidth
+            val bottom: Int = top + screenHeight
+
+            canvas.drawBitmap(
+                outputBitmap, Rect(0, 0, outputBitmap.width, outputBitmap.height),
+                Rect(left, top, right, bottom), null
+            )
+
+            val file = saveBitmapToFile(surfaceView.context, outputBitmap, "image_${outputBitmap}.png")
+            Log.d(TAG, "Saved image: ${file?.absolutePath}")
+
             surfaceView.holder.unlockCanvasAndPost(canvas)
         }
     }
@@ -306,6 +392,104 @@ class CameraSource(
             imageReaderHandler = null
         } catch (e: InterruptedException) {
             Log.d(TAG, e.message.toString())
+        }
+    }
+
+    fun takePhoto() {
+
+        val ORIENTATIONS = SparseIntArray().apply {
+            append(Surface.ROTATION_0, 0)
+            append(Surface.ROTATION_90, 90)
+            append(Surface.ROTATION_180, 180)
+            append(Surface.ROTATION_270, 270)
+        }
+        // Ensure the session is not null before capturing
+        session?.let { captureSession ->
+
+            val file = File(surfaceView.context.getExternalFilesDir(null), "photo.jpg")
+
+            /* imageReader =
+                ImageReader.newInstance(PREVIEW_WIDTH, PREVIEW_HEIGHT, ImageFormat.YUV_420_888, 3)
+            imageReader?.setOnImageAvailableListener({ reader ->
+                val image = reader.acquireLatestImage()
+                if (image != null) {
+                    if (!::imageBitmap.isInitialized) {
+                        imageBitmap =
+                            Bitmap.createBitmap(
+                                PREVIEW_WIDTH,
+                                PREVIEW_HEIGHT,
+                                Bitmap.Config.ARGB_8888
+                            )
+                    }
+                    yuvConverter.yuvToRgb(image, imageBitmap)
+                    // Create rotated version for portrait display
+                    val rotateMatrix = Matrix()
+                    rotateMatrix.postRotate(90.0f)
+
+                    val rotatedBitmap = Bitmap.createBitmap(
+                        imageBitmap, 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT,
+                        rotateMatrix, false
+                    )
+                    processImage(rotatedBitmap)
+                    image.close()
+                }
+            }, imageReaderHandler) */
+
+            // Set up an ImageReader to get the captured image
+            val imageReader = ImageReader.newInstance(PREVIEW_WIDTH, PREVIEW_HEIGHT, ImageFormat.JPEG, 1)
+            val outputSurface = imageReader.surface
+
+            // Create a capture request for taking a picture
+            val captureRequestBuilder = camera?.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)
+            captureRequestBuilder?.addTarget(outputSurface)
+
+            // Set the orientation based on device rotation
+            val rotation = (surfaceView.context as Activity).windowManager.defaultDisplay.rotation
+            captureRequestBuilder?.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation))
+
+            // Set up a listener for when the image is available
+            imageReader.setOnImageAvailableListener({ reader ->
+                val image = reader.acquireLatestImage()
+                if (image != null) {
+                    // Save the image to file
+                    stopPreview()
+                    val bitmap = Bitmap.createBitmap(image.width, image.height, Bitmap.Config.ARGB_8888)
+                    processImage(bitmap)
+                    image.close()
+                }
+            }, imageReaderHandler)
+
+            // Capture the photo
+            try {
+                captureSession.capture(captureRequestBuilder?.build()!!, object : CameraCaptureSession.CaptureCallback() {
+                    override fun onCaptureCompleted(session: CameraCaptureSession, request: CaptureRequest, result: TotalCaptureResult) {
+                        super.onCaptureCompleted(session, request, result)
+                        Log.d(TAG, "Photo taken: ${file.absolutePath}")
+                    }
+                }, imageReaderHandler)
+            } catch (e: Exception) {
+                Log.e(TAG, "Camera exception while capturing photo: ${e.message}")
+            }
+        }
+
+    }
+
+    fun saveBitmapToFile(context: Context, bitmap: Bitmap, filename: String): File? {
+        //val directory = context.getExternalFilesDir(null) // or getFilesDir() for internal storage
+        val directory = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MobileTrainer")
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
+        val file = File(directory, filename)
+
+        return try {
+            FileOutputStream(file).use { out ->
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out) // PNG is a lossless format, you can use JPEG as well
+            }
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
     }
 

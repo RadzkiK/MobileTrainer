@@ -117,4 +117,9 @@
         android:name="com.engineer.mobiletrainer.ExercisesFragment"
         android:label="fragment_exercises"
         tools:layout="@layout/fragment_exercises" />
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.engineer.mobiletrainer.photoFragment"
+        android:label="fragment_photo"
+        tools:layout="@layout/fragment_photo" />
 </navigation>

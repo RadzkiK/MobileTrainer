@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.pm.PackageManager
+import android.media.Image
 import android.os.Bundle
 import android.os.Process
 import android.view.SurfaceView
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.Spinner
 import android.widget.TextView
@@ -21,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.engineer.mobiletrainer.R
 import com.engineer.mobiletrainer.camera.CameraSource
 import com.engineer.mobiletrainer.data.Device
@@ -34,6 +37,8 @@ class TrainingActivity : FragmentActivity() {
     companion object {
         private const val FRAGMENT_DIALOG = "fragment_training"
     }
+
+    private lateinit var takePhoto: Button
 
     /** A [SurfaceView] for camera preview.   */
     private lateinit var surfaceView: SurfaceView
@@ -120,6 +125,7 @@ class TrainingActivity : FragmentActivity() {
         spnModel = findViewById(R.id.spnModel)
         spnDevice = findViewById(R.id.spnDevice)
         surfaceView = findViewById(R.id.surfaceView)
+        takePhoto = findViewById(R.id.trainingTakePhoto)
         tvClassificationValue1 = findViewById(R.id.tvClassificationValue1)
         tvClassificationValue2 = findViewById(R.id.tvClassificationValue2)
         tvClassificationValue3 = findViewById(R.id.tvClassificationValue3)
@@ -131,6 +137,9 @@ class TrainingActivity : FragmentActivity() {
         if (!isCameraPermissionGranted()) {
             requestPermission()
         }
+        takePhoto.setOnClickListener(View.OnClickListener {
+            cameraSource?.takePhoto()
+        })
     }
 
     override fun onStart() {
@@ -188,7 +197,6 @@ class TrainingActivity : FragmentActivity() {
                                 )
                             }
                         }
-
                     }).apply {
                         prepareCamera()
                     }
