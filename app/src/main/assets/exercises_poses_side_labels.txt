@@ -1,0 +1,8 @@
+deadlift_down
+deadlift_up
+pushup_down
+pushup_up
+rowing_down
+rowing_up
+squat_down
+squat_up

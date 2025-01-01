@@ -29,8 +29,8 @@ class PoseClassifier(
     private val output = interpreter.getOutputTensor(0).shape()
 
     companion object {
-        private const val MODEL_FILENAME = "exercisesPoses2_classifier.tflite"
-        private const val LABELS_FILENAME = "exercisesPoses2_labels.txt"
+        private const val MODEL_FILENAME = "exercises_poses_side_classifier.tflite"
+        private const val LABELS_FILENAME = "exercises_poses_side_labels.txt"
         private const val CPU_NUM_THREADS = 4
         //private lateinit var model: Exercisespose2Classifier
 
