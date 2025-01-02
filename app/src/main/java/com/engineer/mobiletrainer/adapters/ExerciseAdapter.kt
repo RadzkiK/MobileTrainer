@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.engineer.mobiletrainer.R
@@ -19,10 +20,12 @@ class ExerciseAdapter(var exercises: List<Exercise>): RecyclerView.Adapter<Exerc
     inner class ExerciseViewHolder(view: View):RecyclerView.ViewHolder(view) {
         val name: TextView
         val desc: TextView
+        val deleteButton: ImageButton
 
         init {
             name = view.findViewById(R.id.recycler_view_exercise_name)
             desc = view.findViewById(R.id.recycler_view_exercise_desc)
+            deleteButton = view.findViewById(R.id.recycler_view_excercise_delete)
             view.setOnClickListener{
                 
             }
@@ -30,6 +33,7 @@ class ExerciseAdapter(var exercises: List<Exercise>): RecyclerView.Adapter<Exerc
     }
     
     var onItemClick : ((Exercise) -> Unit)? = null
+    var onDeleteClick: ((Exercise) -> Unit)? = null
 
     @SuppressLint("NotifyDataSetChanged")
     fun setFilteredList(list: List<Exercise>) {
@@ -47,10 +51,13 @@ class ExerciseAdapter(var exercises: List<Exercise>): RecyclerView.Adapter<Exerc
         return exercises.size
     }
 
+
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
         holder.name.text = exercises[position].name
         holder.desc.text = exercises[position].desc
-        
+        holder.deleteButton.setOnClickListener {
+            onDeleteClick?.invoke(exercises[position])
+        }
         //Set onClickListener for item
         holder.itemView.setOnClickListener{
             onItemClick?.invoke(exercises[position])

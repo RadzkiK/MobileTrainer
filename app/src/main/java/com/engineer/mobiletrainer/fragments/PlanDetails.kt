@@ -98,6 +98,11 @@ class PlanDetails : Fragment() {
             println(list)
             println("Exercise List: " + exerciseList)
 
+            exerciseAdapter.onDeleteClick = {
+                exerciseList = exerciseList.minus(it)
+                exerciseAdapter.setFilteredList(exerciseList)
+            }
+
             exerciseAdapter.onItemClick = {
                 val bundle = bundleOf("exercise" to it)
                 view.findNavController().navigate(R.id.action_planDetails_to_exerciseDetails, bundle)
