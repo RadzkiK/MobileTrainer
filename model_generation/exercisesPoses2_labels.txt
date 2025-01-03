@@ -1,0 +1,9 @@
+benchpress_down
+benchpress_up
+deadlift_down
+deadlift_up
+plank
+rowing_down
+rowing_up
+squat_down
+squat_up
