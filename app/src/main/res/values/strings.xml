@@ -1,4 +1,5 @@
 <resources>
+    <string name="tag_database_change">Database change</string>
     <string name="app_name">MobileTrainer</string>
     <string name="tfe_pe_app_name">TFL Pose Estimation</string>
     <string name="exercise_photo_description">Person doing exercise</string>

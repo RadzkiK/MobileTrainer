@@ -48,6 +48,10 @@ class MainPage : Fragment() {
             view.findNavController().navigate(R.id.action_mainPage_to_exerciseChoice)
         })
 
+        history_button.setOnClickListener(View.OnClickListener {view ->
+            view.findNavController().navigate(R.id.action_mainPage_to_exercisesFragment)
+        })
+
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
         val userName = sharedPref?.getString(R.string.user_name.toString(), "")
 

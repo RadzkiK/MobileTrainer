@@ -20,6 +20,7 @@ import com.engineer.mobiletrainer.database.entity.relations.TrainingSessionWithE
 import com.engineer.mobiletrainer.database.repository.ExerciseRepository
 import com.engineer.mobiletrainer.database.repository.ExerciseSessionRepository
 import com.engineer.mobiletrainer.database.repository.ExerciseSetRepository
+import com.engineer.mobiletrainer.database.repository.PlansExerciseCrossRefRepository
 import com.engineer.mobiletrainer.database.repository.PlansRepository
 import com.engineer.mobiletrainer.database.repository.ProfileRepository
 import com.engineer.mobiletrainer.database.repository.TrainingSessionRepository
@@ -30,7 +31,8 @@ class PlansViewModel(
     private val exerciseRepository: ExerciseRepository,
     private val trainingSessionRepository: TrainingSessionRepository,
     private val exerciseSessionRepository: ExerciseSessionRepository,
-    private val exerciseSetRepository: ExerciseSetRepository
+    private val exerciseSetRepository: ExerciseSetRepository,
+    private val plansExerciseCrossRefRepository: PlansExerciseCrossRefRepository
 ) : ViewModel() {
     val allPlans: LiveData<MutableList<Plans>> = plansRepository.allPlans.asLiveData()
     val allExercises: LiveData<MutableList<Exercise>> = exerciseRepository.allExercises.asLiveData()
@@ -40,6 +42,8 @@ class PlansViewModel(
 
     var plansWithTrainingSessions: MutableList<PlansWithTrainingSessions> = emptyList<PlansWithTrainingSessions>().toMutableList()
     lateinit var planWithExercises: LiveData<MutableList<PlanWithExercises>>
+    lateinit var exerciseFromPlan: LiveData<PlansExerciseCrossRef>
+    var pecr = PlansExerciseCrossRef(0,0)
     var plan: Plans = Plans("")
 
     var exercisesWithSessions: MutableList<ExerciseWithSessions> = emptyList<ExerciseWithSessions>().toMutableList()
@@ -75,12 +79,29 @@ class PlansViewModel(
         plansRepository.delete(name = name)
     }
 
+    fun getExerciseFromPlan(eid: Int, pid: Int) = viewModelScope.launch {
+        exerciseFromPlan = plansRepository.getExerciseFromPlan(eid, pid).asLiveData()
+    }
+
+    fun getExerciseFromPlan2(eid: Int, pid: Int) = viewModelScope.launch {
+        pecr = plansRepository.getExerciseFromPlan2(eid,pid)
+    }
+
     fun getPlansWithTrainingSessions() = viewModelScope.launch {
         plansWithTrainingSessions = plansRepository.getPlansWithTrainingSessions()
     }
 
     fun getPlanWithExercises(pid: Int) = viewModelScope.launch {
         planWithExercises = plansRepository.getPlanWithExercises(pid).asLiveData()
+    }
+
+    //PlansExerciseCrossRef
+    fun insertPlanExerciseCrossRef(plansExerciseCrossRef: PlansExerciseCrossRef) = viewModelScope.launch {
+        plansExerciseCrossRefRepository.insert(plansExerciseCrossRef)
+    }
+
+    fun deletePlanExerciseCrossRef(plansExerciseCrossRef: PlansExerciseCrossRef) = viewModelScope.launch {
+        plansExerciseCrossRefRepository.delete(plansExerciseCrossRef)
     }
 
     //Exercise
@@ -177,10 +198,11 @@ class PlansViewModelFactory(private val plansRepository: PlansRepository,
                             private val exerciseRepository: ExerciseRepository,
                             private val trainingSessionRepository: TrainingSessionRepository,
                             private val exerciseSessionRepository: ExerciseSessionRepository,
-                            private val exerciseSetRepository: ExerciseSetRepository): ViewModelProvider.Factory{
+                            private val exerciseSetRepository: ExerciseSetRepository,
+                            private val plansExerciseCrossRefRepository: PlansExerciseCrossRefRepository): ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(PlansViewModel::class.java))
-            return PlansViewModel(plansRepository, exerciseRepository, trainingSessionRepository, exerciseSessionRepository, exerciseSetRepository) as T
+            return PlansViewModel(plansRepository, exerciseRepository, trainingSessionRepository, exerciseSessionRepository, exerciseSetRepository, plansExerciseCrossRefRepository) as T
 
         throw IllegalArgumentException("Unknown Class for View Model")
     }

@@ -1,17 +1,15 @@
 package com.engineer.mobiletrainer.fragments
 
-import android.content.Intent
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,8 +32,9 @@ class PlansFragment : Fragment() {
         (requireActivity().application as MobileTrainerApplication).exerciseRepository,
         (requireActivity().application as MobileTrainerApplication).trainingSessionRepository,
         (requireActivity().application as MobileTrainerApplication).exerciseSessionRepository,
-        (requireActivity().application as MobileTrainerApplication).exerciseSetRepository) }
-    private lateinit var addButton: Button
+        (requireActivity().application as MobileTrainerApplication).exerciseSetRepository,
+        (requireActivity().application as MobileTrainerApplication).plansExerciseCrossRefRepository) }
+    private lateinit var addButton: ImageButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
     private var plans: MutableList<Plans> = emptyList<Plans>().toMutableList()
@@ -61,7 +60,6 @@ class PlansFragment : Fragment() {
             view.findNavController().navigate(R.id.action_plansFragment_to_planDetails)
             println(plans)
         })
-
         return view
     }
 
@@ -70,20 +68,17 @@ class PlansFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(context)
 
-        plansViewModel.allPlans.observe(requireActivity(), Observer { list ->
-            plans = list
-
-            println(plans)
-            recyclerView.layoutManager = layoutManager
-
-            plansAdapter = PlansAdapter(plans)
-
-            recyclerView.adapter = plansAdapter
-
-            plansAdapter.onItemClick = {
+        recyclerView.layoutManager = layoutManager
+        plansAdapter = PlansAdapter(emptyList())
+        recyclerView.adapter = plansAdapter
+        plansAdapter.onItemClick = {
                 val bundle = bundleOf("plan" to it)
                 view.findNavController().navigate(R.id.action_plansFragment_to_planDetails, bundle)
             }
+        plansViewModel.allPlans.observe(viewLifecycleOwner, { list ->
+            plans = list
+            println(plans)
+            plansAdapter.setFilteredList(plans)
         })
 
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
@@ -100,7 +95,7 @@ class PlansFragment : Fragment() {
                 if (query != null) {
                     val filteredList = emptyList<Plans>().toMutableList()
                     for (i in plans) {
-                        if(i.name?.toLowerCase(Locale.ROOT)?.contains(query) == true) {
+                        if(i.name?.lowercase(Locale.ROOT)?.contains(query.lowercase()) == true) {
                             filteredList.add(i)
                         }
                     }
@@ -112,9 +107,11 @@ class PlansFragment : Fragment() {
                     }
                 }
             }
-
         })
+    }
 
-
+    override fun onResume() {
+        super.onResume()
+        plansViewModel.getAllPlans()
     }
 }

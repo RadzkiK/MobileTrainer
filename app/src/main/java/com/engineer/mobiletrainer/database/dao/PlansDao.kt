@@ -2,6 +2,7 @@ package com.engineer.mobiletrainer.database.dao
 
 import androidx.annotation.Nullable
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -26,7 +27,7 @@ interface PlansDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(plan: Plans)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insertPlanExercise(plansExerciseCrossRef: PlansExerciseCrossRef)
 
     @Query("DELETE FROM plans WHERE name = :name")
@@ -39,5 +40,13 @@ interface PlansDao {
     @Transaction
     @Query("SELECT * FROM plans JOIN plansexercisecrossref ON plans.pid = plansexercisecrossref.pid WHERE plansexercisecrossref.pid = :pid")
     fun getPlanWithExercises(pid: Int): Flow<MutableList<PlanWithExercises>>
+
+    @Transaction
+    @Query("SELECT * FROM plansexercisecrossref WHERE plansexercisecrossref.eid = :eid AND plansexercisecrossref.pid = :pid")
+    fun getPlanExerciseCrossRef(eid: Int, pid: Int): Flow<PlansExerciseCrossRef>
+
+    @Transaction
+    @Query("SELECT * FROM plansexercisecrossref WHERE plansexercisecrossref.eid = :eid AND plansexercisecrossref.pid = :pid")
+    suspend fun getPlanExerciseCrossRef2(eid: Int, pid: Int): PlansExerciseCrossRef
 
 }

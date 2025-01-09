@@ -5,6 +5,7 @@ import com.engineer.mobiletrainer.database.AppDatabase
 import com.engineer.mobiletrainer.database.repository.ExerciseRepository
 import com.engineer.mobiletrainer.database.repository.ExerciseSessionRepository
 import com.engineer.mobiletrainer.database.repository.ExerciseSetRepository
+import com.engineer.mobiletrainer.database.repository.PlansExerciseCrossRefRepository
 import com.engineer.mobiletrainer.database.repository.PlansRepository
 import com.engineer.mobiletrainer.database.repository.ProfileRepository
 import com.engineer.mobiletrainer.database.repository.SettingsRepository
@@ -25,4 +26,5 @@ class MobileTrainerApplication : Application() {
     val trainingSessionRepository by lazy {TrainingSessionRepository(database.trainingSessionDao())}
     val exerciseSessionRepository by lazy {ExerciseSessionRepository(database.exerciseSessionDao())}
     val exerciseSetRepository by lazy {ExerciseSetRepository(database.exercisesSetDao())}
+    val plansExerciseCrossRefRepository by lazy {PlansExerciseCrossRefRepository(database.plansExerciseCrossRefDao())}
 }

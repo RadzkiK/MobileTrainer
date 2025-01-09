@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "plans", indices = [Index(value = ["name"], unique = true)])
 data class Plans (
-   @ColumnInfo(name = "name") val name: String?
+   @ColumnInfo(name = "name") var name: String?
 ) : Parcelable {
     @PrimaryKey(autoGenerate = true) var pid: Int = 0
     @ColumnInfo(name = "description") var desc: String = ""

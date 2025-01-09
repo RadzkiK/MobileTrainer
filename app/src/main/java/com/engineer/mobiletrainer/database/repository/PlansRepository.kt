@@ -48,4 +48,14 @@ class PlansRepository(private val plansDao: PlansDao) {
     fun getPlanWithExercises(pid: Int): Flow<MutableList<PlanWithExercises>> {
         return plansDao.getPlanWithExercises(pid)
     }
+
+    @WorkerThread
+    fun getExerciseFromPlan(eid: Int, pid: Int): Flow<PlansExerciseCrossRef> {
+        return plansDao.getPlanExerciseCrossRef(eid, pid)
+    }
+
+    @WorkerThread
+    suspend fun getExerciseFromPlan2(eid: Int, pid: Int): PlansExerciseCrossRef {
+        return plansDao.getPlanExerciseCrossRef2(eid, pid)
+    }
 }

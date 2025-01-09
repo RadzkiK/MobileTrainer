@@ -27,7 +27,6 @@ class ExerciseAdapter(var exercises: List<Exercise>): RecyclerView.Adapter<Exerc
             desc = view.findViewById(R.id.recycler_view_exercise_desc)
             deleteButton = view.findViewById(R.id.recycler_view_excercise_delete)
             view.setOnClickListener{
-                
             }
         }
     }

@@ -35,7 +35,8 @@ class MainActivity : AppCompatActivity() {
         (application as MobileTrainerApplication).exerciseRepository,
         (application as MobileTrainerApplication).trainingSessionRepository,
         (application as MobileTrainerApplication).exerciseSessionRepository,
-        (application as MobileTrainerApplication).exerciseSetRepository) }
+        (application as MobileTrainerApplication).exerciseSetRepository,
+        (application as MobileTrainerApplication).plansExerciseCrossRefRepository) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

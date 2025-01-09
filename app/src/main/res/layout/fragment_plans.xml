@@ -31,17 +31,16 @@
 
     </LinearLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/plans_add"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:text="+"
-        android:textSize="20sp"
-        android:background="@drawable/add_button"
-        android:gravity="center"
+        android:backgroundTint="#ddd"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/add_icon_background_dark"
+        android:scaleType="fitCenter"/>
 
 
 

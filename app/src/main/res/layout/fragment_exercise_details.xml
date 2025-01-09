@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ExerciseDetails"
-    android:orientation="vertical">
+    tools:context=".fragments.ExerciseDetails"
+    android:orientation="vertical"
+    android:background="@color/background">
 
     <AutoCompleteTextView
         android:id="@+id/exerciseDetails_name"
@@ -21,19 +22,37 @@
         android:id="@+id/exerciseDetails_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="20dp"
         android:text="No description"
         android:ems="1"
         android:gravity="start|top"
         android:inputType="textMultiLine" />
 
-    <Button
-        android:id="@+id/exerciseDetails_saveButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="Save"
-        android:layout_gravity="bottom|center"
-        android:background="@drawable/roundedbutton"
-        android:layout_marginBottom="10dp"/>
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/exerciseDetails_deleteButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="10dp"
+            android:scaleType="fitCenter"
+            android:backgroundTint="#ddd"
+            android:src="@drawable/thrash_icon_background_dark" />
+
+        <ImageButton
+            android:id="@+id/exerciseDetails_saveButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="10dp"
+            android:scaleType="fitCenter"
+            android:backgroundTint="#ddd"
+            android:src="@drawable/save_icon_background_dark" />
+
+    </LinearLayout>
 
 </LinearLayout>

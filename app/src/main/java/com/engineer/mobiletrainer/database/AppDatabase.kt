@@ -8,6 +8,7 @@ import com.engineer.mobiletrainer.database.dao.ExerciseDao
 import com.engineer.mobiletrainer.database.dao.ExerciseSessionDao
 import com.engineer.mobiletrainer.database.dao.ExerciseSetDao
 import com.engineer.mobiletrainer.database.dao.PlansDao
+import com.engineer.mobiletrainer.database.dao.PlansExerciseCrossRefDao
 import com.engineer.mobiletrainer.database.dao.ProfileDao
 import com.engineer.mobiletrainer.database.dao.SettingsDao
 import com.engineer.mobiletrainer.database.dao.TrainingSessionDao
@@ -22,7 +23,7 @@ import com.engineer.mobiletrainer.database.entity.TrainingSession
 import kotlinx.coroutines.CoroutineScope
 
 
-@Database(entities = [Settings::class, Profile::class, Plans::class, Exercise::class, ExerciseSet::class, ExerciseSession::class, TrainingSession::class, PlansExerciseCrossRef::class], version = 6)
+@Database(entities = [Settings::class, Profile::class, Plans::class, Exercise::class, ExerciseSet::class, ExerciseSession::class, TrainingSession::class, PlansExerciseCrossRef::class], version = 7)
 public abstract class AppDatabase : RoomDatabase() {
 
     companion object {
@@ -48,4 +49,5 @@ public abstract class AppDatabase : RoomDatabase() {
     abstract fun trainingSessionDao(): TrainingSessionDao
     abstract fun exerciseSessionDao(): ExerciseSessionDao
     abstract fun exercisesSetDao(): ExerciseSetDao
+    abstract fun plansExerciseCrossRefDao(): PlansExerciseCrossRefDao
 }
