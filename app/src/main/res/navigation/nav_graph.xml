@@ -71,7 +71,18 @@
             app:popExitAnim="@anim/slid_from_left" />
         <action
             android:id="@+id/action_mainPage_to_exercisesFragment"
-            app:destination="@id/exercisesFragment" />
+            app:destination="@id/exercisesFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slid_from_left" />
+        <action
+            android:id="@+id/action_mainPage_to_calendarFragment"
+            app:destination="@id/calendarFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slid_from_left" />
     </fragment>
     <fragment
         android:id="@+id/profile"
@@ -99,7 +110,11 @@
         tools:layout="@layout/fragment_plans" >
         <action
             android:id="@+id/action_plansFragment_to_planDetails"
-            app:destination="@id/planDetails" />
+            app:destination="@id/planDetails"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slid_from_left" />
     </fragment>
     <fragment
         android:id="@+id/planDetails"
@@ -108,7 +123,11 @@
         tools:layout="@layout/fragment_plan_details" >
         <action
             android:id="@+id/action_planDetails_to_exerciseDetails"
-            app:destination="@id/exerciseDetails" />
+            app:destination="@id/exerciseDetails"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slid_from_left" />
     </fragment>
     <fragment
         android:id="@+id/exerciseDetails"
@@ -122,11 +141,15 @@
         tools:layout="@layout/fragment_exercises" >
         <action
             android:id="@+id/action_exercisesFragment_to_exerciseDetails"
-            app:destination="@id/exerciseDetails" />
+            app:destination="@id/exerciseDetails"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slid_from_left" />
     </fragment>
     <fragment
-        android:id="@+id/photoFragment"
-        android:name="com.engineer.mobiletrainer.photoFragment"
-        android:label="fragment_photo"
-        tools:layout="@layout/fragment_photo" />
+        android:id="@+id/calendarFragment"
+        android:name="com.engineer.mobiletrainer.fragments.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" />
 </navigation>

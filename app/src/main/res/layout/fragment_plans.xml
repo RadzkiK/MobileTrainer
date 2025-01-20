@@ -33,9 +33,9 @@
 
     <ImageButton
         android:id="@+id/plans_add"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:backgroundTint="#ddd"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/button_background"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"

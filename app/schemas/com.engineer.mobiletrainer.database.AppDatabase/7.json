@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 7,
-    "identityHash": "a1b008fa4e8ca453cffbb8e9429df2fe",
+    "identityHash": "16d9ab7f46579c79c5c2fa1afd4480f0",
     "entities": [
       {
         "tableName": "settings",
@@ -279,25 +279,31 @@
         "indices": [
           {
             "name": "index_exercise_sessions_tsid_eid",
-            "unique": true,
+            "unique": false,
             "columnNames": [
               "tsid",
               "eid"
             ],
             "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_exercise_sessions_tsid_eid` ON `${TABLE_NAME}` (`tsid`, `eid`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_exercise_sessions_tsid_eid` ON `${TABLE_NAME}` (`tsid`, `eid`)"
           }
         ],
         "foreignKeys": []
       },
       {
         "tableName": "training_sessions",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pid` INTEGER, `date` INTEGER, `tsid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `is_completed` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pid` INTEGER, `plan_name` TEXT, `date` INTEGER, `tsid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `is_completed` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "pid",
             "columnName": "pid",
             "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "planName",
+            "columnName": "plan_name",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
@@ -364,7 +370,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a1b008fa4e8ca453cffbb8e9429df2fe')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '16d9ab7f46579c79c5c2fa1afd4480f0')"
     ]
   }
 }

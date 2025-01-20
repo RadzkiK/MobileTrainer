@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "training_sessions")
 data class TrainingSession(
     @ColumnInfo(name = "pid") val pid: Int?,
+    @ColumnInfo(name = "plan_name") val planName: String?,
     @ColumnInfo(name = "date") val date: Long?
 ) {
     @PrimaryKey(autoGenerate = true) var tsid: Int = 0

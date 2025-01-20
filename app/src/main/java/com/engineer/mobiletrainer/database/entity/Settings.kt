@@ -13,8 +13,4 @@ data class Settings(
     @ColumnInfo(name = "value") val value: Int?
 ) {
     @PrimaryKey(autoGenerate = true) var sid: Int = 0
-//    fun getValueOfSetting(name : String): Int? {
-//        if(name == setting) return value
-//        else return 0
-//    }
 }

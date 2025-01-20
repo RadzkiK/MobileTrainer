@@ -38,7 +38,6 @@ class MainPage : Fragment() {
         history_button = view.findViewById(R.id.mainPage_tile_history)
         reps_button = view.findViewById(R.id.mainPage_tile_rep)
         hello = view.findViewById(R.id.mainPage_hello)
-        lastTraining = view.findViewById(R.id.mainPage_lastTrainingText)
 
         plans_button.setOnClickListener(View.OnClickListener {view ->
             view.findNavController().navigate(R.id.action_mainPage_to_plansFragment)
@@ -50,6 +49,10 @@ class MainPage : Fragment() {
 
         history_button.setOnClickListener(View.OnClickListener {view ->
             view.findNavController().navigate(R.id.action_mainPage_to_exercisesFragment)
+        })
+
+        calendar_button.setOnClickListener(View.OnClickListener {view ->
+            view.findNavController().navigate(R.id.action_mainPage_to_calendarFragment)
         })
 
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp"
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/training_session_item_date_textview"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@color/background_dark"
+        android:gravity="center"
+        android:lineSpacingExtra="2.5dp"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.143"
+        tools:text="THU\nJUN 30\n14:00" />
+
+    <!--Colored view divider-->
+    <View
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/training_session_item_date_textview"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/training_session_item_plan_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/training_session_item_date_textview"
+        app:layout_constraintDimensionRatio="W,2:1"
+        app:layout_constraintStart_toEndOf="@id/training_session_item_date_textview"
+        app:layout_constraintTop_toTopOf="@id/training_session_item_date_textview">
+
+        <TextView
+            android:id="@+id/training_session_item_plan_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:text="PLAN" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/training_session_item_completed_layout"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:rotation="30"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@id/training_session_item_plan_layout"
+        app:layout_constraintDimensionRatio="W,2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/training_session_item_plan_layout">
+
+        <ImageView
+            android:id="@+id/training_session_item_completed_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:srcCompat="@drawable/check_icon_green"
+            />
+
+        <TextView
+            android:id="@+id/training_session_item_completed_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/Green"
+            android:textSize="15sp"
+            tools:text="Completed"
+            android:layout_marginBottom="10dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

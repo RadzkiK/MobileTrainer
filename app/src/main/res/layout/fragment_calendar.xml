@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.CalendarFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/calendar_title"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:text="Calendar"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:background="@color/background_dark"
+        android:textColor="@color/black"/>
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/calendar_month_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <ImageView
+                    android:id="@+id/calendar_previousMonthImage"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/chevron_left_icon_background_dark"
+                    />
+
+                <TextView
+                    android:id="@+id/calendar_MonthYearText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/background_dark"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/calendar_nextMonthImage"
+                    app:layout_constraintStart_toEndOf="@id/calendar_previousMonthImage"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="April 2018" />
+
+                <ImageView
+                    android:id="@+id/calendar_nextMonthImage"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/chevron_right_icon_background_dark" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background">
+
+            <com.kizitonwose.calendar.view.CalendarView
+                android:id="@+id/calendar_calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cv_dayViewResource="@layout/calendar_day"
+                app:cv_monthHeaderResource="@layout/calendar_header"
+                app:cv_outDateStyle="endOfGrid" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/calendar_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

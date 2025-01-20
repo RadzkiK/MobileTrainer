@@ -10,6 +10,11 @@ class TrainingSessionRepository(private val trainingSessionDao: TrainingSessionD
 
     val allTrainingSessions: Flow<MutableList<TrainingSession>> = trainingSessionDao.getAll()
 
+    @WorkerThread
+    suspend fun getTrainingSessions(): MutableList<TrainingSession> {
+        return trainingSessionDao.getTrainingSessions()
+    }
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(trainingSession: TrainingSession) {

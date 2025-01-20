@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "exercise_sessions", indices = [Index(value = ["tsid","eid"], unique = true)])
+@Entity(tableName = "exercise_sessions", indices = [Index(value = ["tsid","eid"])])
 data class ExerciseSession(
     @ColumnInfo(name = "tsid") val tsid: Int?,
     @ColumnInfo(name = "eid") val eid: Int?

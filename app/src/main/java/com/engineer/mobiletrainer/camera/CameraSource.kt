@@ -41,7 +41,7 @@ import android.util.SparseIntArray
 import android.view.Surface
 import android.view.SurfaceView
 import kotlinx.coroutines.suspendCancellableCoroutine
-import com.engineer.mobiletrainer.VisualizationUtils
+import com.engineer.mobiletrainer.utils.VisualizationUtils
 import com.engineer.mobiletrainer.YuvToRgbConverter
 import com.engineer.mobiletrainer.data.BodyPart
 import com.engineer.mobiletrainer.data.Person

@@ -1,6 +1,8 @@
 package com.engineer.mobiletrainer.fragments
 
-import android.annotation.SuppressLint
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.text.Editable
@@ -9,27 +11,33 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.TimePicker
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.engineer.mobiletrainer.MobileTrainerApplication
 import com.engineer.mobiletrainer.R
 import com.engineer.mobiletrainer.adapters.ExerciseAdapter
-import com.engineer.mobiletrainer.adapters.PlansAdapter
+import com.engineer.mobiletrainer.adapters.ExercisesAdapter
 import com.engineer.mobiletrainer.database.entity.Exercise
 import com.engineer.mobiletrainer.database.entity.Plans
 import com.engineer.mobiletrainer.database.entity.PlansExerciseCrossRef
+import com.engineer.mobiletrainer.database.entity.TrainingSession
 import com.engineer.mobiletrainer.viewmodels.PlansViewModel
 import com.engineer.mobiletrainer.viewmodels.PlansViewModelFactory
-import kotlinx.coroutines.awaitAll
-import java.lang.Thread.sleep
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.Locale
 
 class PlanDetails : Fragment() {
 
@@ -48,7 +56,7 @@ class PlanDetails : Fragment() {
     private lateinit var planName: TextView
     private lateinit var planDesc: EditText
     private var desc: Editable = Editable.Factory.getInstance().newEditable("")
-    private var exerciseList: List<Exercise> = emptyList<Exercise>()
+    private var exerciseList: MutableList<Exercise> = emptyList<Exercise>().toMutableList()
     private lateinit var exerciseAdapter: ExerciseAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var deleteButton: ImageButton
@@ -92,12 +100,69 @@ class PlanDetails : Fragment() {
 
         addToCalendarButton = view.findViewById(R.id.planDetails_addToCalendar)
         addToCalendarButton.setOnClickListener(View.OnClickListener {
-
+            showDatePickerDialog()
         })
 
         addButton = view.findViewById(R.id.plansDetails_addExercise)
         addButton.setOnClickListener(View.OnClickListener {
 
+            var exercises: List<Exercise> = emptyList<Exercise>()
+            var exercisesAdapter: ExercisesAdapter
+            val dialog = Dialog(requireActivity())
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(true)
+            dialog.setContentView(R.layout.add_exercise)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            val dialogSearchView = dialog.findViewById<SearchView>(R.id.add_exercise_searchview)
+            val dialogRecyclerView = dialog.findViewById<RecyclerView>(R.id.add_exercise_recyclerview)
+
+            val layoutManager = LinearLayoutManager(context)
+
+            dialogRecyclerView.layoutManager = layoutManager
+            exercisesAdapter = ExercisesAdapter(emptyList())
+            dialogRecyclerView.adapter = exercisesAdapter
+            exercisesAdapter.onItemClick = {
+                addedExercises.add(it)
+                exerciseList.add(it)
+                exerciseAdapter.setFilteredList(exerciseList)
+                dialog.hide()
+            }
+            plansViewModel.allExercises.observe(viewLifecycleOwner, { list ->
+                exercises = list
+                println(exercises)
+                exercisesAdapter.setFilteredList(exercises)
+            })
+
+            dialogSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    filterList(newText)
+                    return true
+                }
+
+                private fun filterList(query: String?) {
+                    if (query != null) {
+                        val filteredList = emptyList<Exercise>().toMutableList()
+                        for (i in exercises) {
+                            if(i.name?.lowercase(Locale.ROOT)?.contains(query.lowercase()) == true) {
+                                filteredList.add(i)
+                            }
+                        }
+                        if(filteredList.isEmpty()) {
+                            Toast.makeText(context, "No data found", Toast.LENGTH_SHORT).show()
+                            exercisesAdapter.setFilteredList(filteredList)
+                        }else {
+                            exercisesAdapter.setFilteredList(filteredList)
+                        }
+                    }
+                }
+            })
+
+            dialog.show()
         })
 
         deleteButton = view.findViewById(R.id.planDetails_deletePlan)
@@ -169,15 +234,15 @@ class PlanDetails : Fragment() {
                 }
                 if(plan.name?.isEmpty() == false && plan.desc.isNotEmpty() && exerciseList.isNotEmpty()) {
                     plansViewModel.insertPlan(plan).invokeOnCompletion {
-                        for (exercise in exerciseList) {
-                            plansViewModel.insertPlanExerciseCrossRef(PlansExerciseCrossRef(plan.pid, exercise.eid)).invokeOnCompletion {
-                                Log.d(R.string.tag_database_change.toString(), "PlansExerciseCrossRef has ben added: pid: ${plan.pid} eid: ${exercise.eid}")
-                            }
-                        }
                         Log.d(R.string.tag_database_change.toString(), "Plan: $plan has been saved")
                         plansViewModel.getPlan(plan.name!!).invokeOnCompletion {
                             plan = plansViewModel.plan
                             Log.d("PlanDetails", "Plan: $plan has pid: ${plan.pid}")
+                            for (exercise in exerciseList) {
+                                plansViewModel.insertPlanExerciseCrossRef(PlansExerciseCrossRef(plan.pid, exercise.eid)).invokeOnCompletion {
+                                    Log.d(R.string.tag_database_change.toString(), "PlansExerciseCrossRef has ben added: pid: ${plan.pid} eid: ${exercise.eid}")
+                                }
+                            }
                         }
                     }
                 } else {
@@ -204,7 +269,7 @@ class PlanDetails : Fragment() {
             if(list.isEmpty()) {
                 //do nothing
             } else {
-                exerciseList = list[0].exercises
+                exerciseList = list[0].exercises.toMutableList()
             }
 
             Log.d("PlanDetails", "list size: ${list.size.toString()}")
@@ -218,7 +283,7 @@ class PlanDetails : Fragment() {
                     Log.d("PlanDetails","CrossRef from pecr: $crossRef")
                     deletedPlansExerciseCrossRef.add(crossRef)
                 }
-                exerciseList = exerciseList.minus(it)
+                exerciseList = exerciseList.minus(it).toMutableList()
                 Log.d("PlanDetails","Exercise List: $exerciseList")
                 deletedExercises.add(it)
                 Log.d("PlanDetails","Deleted exercises: $deletedExercises")
@@ -247,12 +312,53 @@ class PlanDetails : Fragment() {
                     Log.d(R.string.tag_database_change.toString(), "PlansExereciseCrossRef with eid: ${crossRef.eid} and pid: ${crossRef.pid} has been deleted.")
                 }
             }
-            exerciseList = exerciseList.minus(exercise)
+            exerciseList = exerciseList.minus(exercise).toMutableList()
             println("Exercise List: $exerciseList")
             deletedExercises.add(exercise)
             println("Deleted exercises: $deletedExercises")
             exerciseAdapter.setFilteredList(exerciseList)
         }
+    }
+
+    private fun showDatePickerDialog() {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.date_picker)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+
+        val datePicker = dialog.findViewById<DatePicker>(R.id.datepicker_datePicker)
+        val timePicker = dialog.findViewById<TimePicker>(R.id.datepicker_timePicker)
+        val okButton: Button = dialog.findViewById(R.id.datepicker_okButton)
+        val cancelButton: Button = dialog.findViewById(R.id.datepicker_cancelButton)
+
+        okButton.setOnClickListener {
+            val year = datePicker.year
+            val month = datePicker.month
+            val dayOfMonth = datePicker.dayOfMonth
+            val hour = timePicker.hour
+            val minute = timePicker.minute
+
+//            val selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
+//            val selectedTime = LocalTime.of(hour, minute)
+            val date = LocalDateTime.of(year, month + 1, dayOfMonth, hour, minute, 0)
+            val toSave = date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+            val trainingSession = TrainingSession(plan.pid, plan.name, toSave)
+
+            plansViewModel.insertTrainingSession(trainingSession).invokeOnCompletion {
+                Log.d("PlanDetails", "$trainingSession added to database ")
+            }
+
+            dialog.dismiss()
+        }
+
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     override fun onResume() {

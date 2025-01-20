@@ -51,6 +51,7 @@ class PlansViewModel(
     var exercise: Exercise = Exercise("")
 
     var trainingSessionWithExerciseSessions: MutableList<TrainingSessionWithExerciseSessions> = emptyList<TrainingSessionWithExerciseSessions>().toMutableList()
+    var trainingSessions: MutableList<TrainingSession> = emptyList<TrainingSession>().toMutableList()
 
     var exerciseSessionWithSets: MutableList<ExerciseSessionWithSets> = emptyList<ExerciseSessionWithSets>().toMutableList()
 
@@ -134,8 +135,8 @@ class PlansViewModel(
     }
 
     //TrainingSession
-    fun getAllTrainingSessions(): MutableList<TrainingSession>? {
-        return allTrainingSessions.value
+    fun getAllTrainingSessions() = viewModelScope.launch {
+        trainingSessions = trainingSessionRepository.getTrainingSessions()
     }
 
     fun insertTrainingSession(trainingSession: TrainingSession) = viewModelScope.launch {
