@@ -34,10 +34,6 @@ class ExerciseChoice : Fragment() {
                 view -> view.findNavController().navigate(R.id.action_exerciseChoice_to_trainingActivity)
         })
 
-        view.findViewById<LinearLayout>(R.id.plankView).setOnClickListener(View.OnClickListener() {
-                view -> view.findNavController().navigate(R.id.action_exerciseChoice_to_trainingActivity)
-        })
-
         return view
     }
 }

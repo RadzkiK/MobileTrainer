@@ -12,9 +12,6 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.findViewTreeLifecycleOwner
-import com.engineer.mobiletrainer.StatusBarColorLifecycleObserver
 import com.kizitonwose.calendar.core.Week
 import com.kizitonwose.calendar.core.yearMonth
 import java.time.DayOfWeek
@@ -60,14 +57,6 @@ internal fun Context.getColorCompat(@ColorRes color: Int) =
 internal fun TextView.setTextColorRes(@ColorRes color: Int) =
     setTextColor(context.getColorCompat(color))
 
-fun Fragment.addStatusBarColorUpdate(@ColorRes colorRes: Int) {
-    view?.findViewTreeLifecycleOwner()?.lifecycle?.addObserver(
-        StatusBarColorLifecycleObserver(
-            requireActivity(),
-            requireContext().getColorCompat(colorRes),
-        ),
-    )
-}
 
 fun YearMonth.displayText(short: Boolean = false): String {
     return "${this.month.displayText(short = short)} ${this.year}"

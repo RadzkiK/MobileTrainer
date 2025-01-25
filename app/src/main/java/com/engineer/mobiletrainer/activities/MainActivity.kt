@@ -25,6 +25,8 @@ import com.engineer.mobiletrainer.viewmodels.PlansViewModelFactory
 import com.engineer.mobiletrainer.viewmodels.PlansViewModel
 import com.engineer.mobiletrainer.viewmodels.ProfileViewModel
 import com.engineer.mobiletrainer.viewmodels.ProfileViewModelFactory
+import com.engineer.mobiletrainer.viewmodels.SettingsViewModel
+import com.engineer.mobiletrainer.viewmodels.SettingsViewModelFactory
 import java.lang.Thread.sleep
 
 class MainActivity : AppCompatActivity() {
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         (application as MobileTrainerApplication).exerciseSessionRepository,
         (application as MobileTrainerApplication).exerciseSetRepository,
         (application as MobileTrainerApplication).plansExerciseCrossRefRepository) }
+    private val settingsViewModel: SettingsViewModel by viewModels { SettingsViewModelFactory((application as MobileTrainerApplication).settingsRepository )}
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,13 +81,14 @@ class MainActivity : AppCompatActivity() {
             })
                 dialog.show()
                 //also if this is first time let's generate some values in database
-                val databaseGenerator = DatabaseGenerator(plansViewModel, this)
+                val databaseGenerator = DatabaseGenerator(plansViewModel, settingsViewModel, this)
                 try {
                     databaseGenerator.generatePlans()
                     sleep(100)
                     databaseGenerator.generateExercises()
                     sleep(100)
                     databaseGenerator.matchPlansAndExercises()
+                    databaseGenerator.generateSettings()
 
                 } catch (e: Exception) {
                     val builder = AlertDialog.Builder(this)

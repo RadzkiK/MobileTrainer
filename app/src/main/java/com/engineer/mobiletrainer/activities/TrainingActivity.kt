@@ -4,32 +4,29 @@ import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.pm.PackageManager
-import android.media.Image
 import android.os.Bundle
 import android.os.Process
 import android.view.SurfaceView
 import android.view.View
 import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.CompoundButton
-import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.SwitchCompat
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
+import com.engineer.mobiletrainer.MobileTrainerApplication
 import com.engineer.mobiletrainer.R
 import com.engineer.mobiletrainer.camera.CameraSource
 import com.engineer.mobiletrainer.data.Device
 import com.engineer.mobiletrainer.ml.ModelType
 import com.engineer.mobiletrainer.ml.MoveNet
 import com.engineer.mobiletrainer.ml.PoseClassifier
+import com.engineer.mobiletrainer.viewmodels.SettingsViewModel
+import com.engineer.mobiletrainer.viewmodels.SettingsViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -37,8 +34,6 @@ class TrainingActivity : FragmentActivity() {
     companion object {
         private const val FRAGMENT_DIALOG = "fragment_training"
     }
-
-    private lateinit var takePhoto: Button
 
     /** A [SurfaceView] for camera preview.   */
     private lateinit var surfaceView: SurfaceView
@@ -56,15 +51,10 @@ class TrainingActivity : FragmentActivity() {
 
     private lateinit var tvScore: TextView
     private lateinit var tvFPS: TextView
-    private lateinit var spnDevice: Spinner
-    private lateinit var spnModel: Spinner
     private lateinit var tvClassificationValue1: TextView
     private lateinit var tvClassificationValue2: TextView
-    private lateinit var tvClassificationValue3: TextView
-    private lateinit var swClassification: SwitchCompat
-    private lateinit var vClassificationOption: View
     private var cameraSource: CameraSource? = null
-    private var isClassifyPose = false
+    private var isClassifyPose = true
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
@@ -83,37 +73,7 @@ class TrainingActivity : FragmentActivity() {
                     .show(supportFragmentManager, FRAGMENT_DIALOG)
             }
         }
-    private var changeModelListener = object : AdapterView.OnItemSelectedListener {
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-            // do nothing
-        }
-
-        override fun onItemSelected(
-            parent: AdapterView<*>?,
-            view: View?,
-            position: Int,
-            id: Long
-        ) {
-            changeModel(position)
-        }
-    }
-
-    private var changeDeviceListener = object : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            changeDevice(position)
-        }
-
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-            // do nothing
-        }
-    }
-
-    private var setClassificationListener =
-        CompoundButton.OnCheckedChangeListener { _, isChecked ->
-            showClassificationResult(isChecked)
-            isClassifyPose = isChecked
-            isPoseClassifier()
-        }
+    private val settingsViewModel: SettingsViewModel by viewModels { SettingsViewModelFactory((this.application as MobileTrainerApplication).settingsRepository) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,24 +82,15 @@ class TrainingActivity : FragmentActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         tvScore = findViewById(R.id.tvScore)
         tvFPS = findViewById(R.id.tvFps)
-        spnModel = findViewById(R.id.spnModel)
-        spnDevice = findViewById(R.id.spnDevice)
         surfaceView = findViewById(R.id.surfaceView)
-        takePhoto = findViewById(R.id.trainingTakePhoto)
         tvClassificationValue1 = findViewById(R.id.tvClassificationValue1)
         tvClassificationValue2 = findViewById(R.id.tvClassificationValue2)
-        tvClassificationValue3 = findViewById(R.id.tvClassificationValue3)
-        swClassification = findViewById(R.id.swPoseClassification)
-        vClassificationOption = findViewById(R.id.vClassificationOption)
-        initSpinner()
-        spnModel.setSelection(modelPos)
-        swClassification.setOnCheckedChangeListener(setClassificationListener)
         if (!isCameraPermissionGranted()) {
             requestPermission()
         }
-        takePhoto.setOnClickListener(View.OnClickListener {
-            cameraSource?.takePhoto()
-        })
+        settingsViewModel.getSettingNamed(R.string.setting_1.toString()).invokeOnCompletion {
+            modelPos = settingsViewModel.setting.value!!
+        }
     }
 
     override fun onStart() {
@@ -191,10 +142,6 @@ class TrainingActivity : FragmentActivity() {
                                     R.string.tfe_pe_tv_classification_value,
                                     convertPoseLabels(if (it.size >= 2) it[1] else null)
                                 )
-                                tvClassificationValue3.text = getString(
-                                    R.string.tfe_pe_tv_classification_value,
-                                    convertPoseLabels(if (it.size >= 3) it[2] else null)
-                                )
                             }
                         }
                     }).apply {
@@ -218,32 +165,6 @@ class TrainingActivity : FragmentActivity() {
         cameraSource?.setClassifier(if (isClassifyPose) PoseClassifier.create(this) else null)
     }
 
-    // Initialize spinners to let user select model/accelerator/tracker.
-    private fun initSpinner() {
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.tfe_pe_models_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            spnModel.adapter = adapter
-            spnModel.onItemSelectedListener = changeModelListener
-        }
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.tfe_pe_device_name, android.R.layout.simple_spinner_item
-        ).also { adaper ->
-            adaper.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-            spnDevice.adapter = adaper
-            spnDevice.onItemSelectedListener = changeDeviceListener
-        }
-
-    }
-
     // Change model when app is running
     private fun changeModel(position: Int) {
         if (modelPos == position) return
@@ -251,32 +172,16 @@ class TrainingActivity : FragmentActivity() {
         createPoseEstimator()
     }
 
-    // Change device (accelerator) type when app is running
-    private fun changeDevice(position: Int) {
-        val targetDevice = when (position) {
-            0 -> Device.CPU
-            1 -> Device.GPU
-            else -> Device.NNAPI
-        }
-        if (device == targetDevice) return
-        device = targetDevice
-        createPoseEstimator()
-    }
-
 
     private fun createPoseEstimator() {
-        // For MoveNet MultiPose, hide score and disable pose classifier as the model returns
-        // multiple Person instances.
         val poseDetector = when (modelPos) {
             0 -> {
                 // MoveNet Lightning (SinglePose)
-                showPoseClassifier(true)
                 showDetectionScore(true)
                 MoveNet.create(this, device, ModelType.Lightning)
             }
             1 -> {
                 // MoveNet Thunder (SinglePose)
-                showPoseClassifier(true)
                 showDetectionScore(true)
                 MoveNet.create(this, device, ModelType.Thunder)
             }
@@ -286,14 +191,6 @@ class TrainingActivity : FragmentActivity() {
         }
         poseDetector?.let { detector ->
             cameraSource?.setDetector(detector)
-        }
-    }
-
-    // Show/hide the pose classification option.
-    private fun showPoseClassifier(isVisible: Boolean) {
-        vClassificationOption.visibility = if (isVisible) View.VISIBLE else View.GONE
-        if (!isVisible) {
-            swClassification.isChecked = false
         }
     }
 
@@ -307,7 +204,6 @@ class TrainingActivity : FragmentActivity() {
         val visibility = if (isVisible) View.VISIBLE else View.GONE
         tvClassificationValue1.visibility = visibility
         tvClassificationValue2.visibility = visibility
-        tvClassificationValue3.visibility = visibility
     }
 
     private fun requestPermission() {

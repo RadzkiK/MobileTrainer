@@ -2,17 +2,19 @@ package com.engineer.mobiletrainer.database
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.engineer.mobiletrainer.R
 import com.engineer.mobiletrainer.database.entity.Exercise
 import com.engineer.mobiletrainer.database.entity.Plans
 import com.engineer.mobiletrainer.database.entity.PlansExerciseCrossRef
+import com.engineer.mobiletrainer.database.entity.Settings
 import com.engineer.mobiletrainer.viewmodels.PlansViewModel
-import java.lang.Thread.sleep
+import com.engineer.mobiletrainer.viewmodels.SettingsViewModel
 
 class DatabaseGenerator(
     private val plansViewModel: PlansViewModel,
+    private val settingsViewModel: SettingsViewModel,
     private val activity: AppCompatActivity
 ) {
-
     var allPlans: List<Plans> = emptyList()
     var allExercises: List<Exercise> = emptyList()
 
@@ -55,6 +57,10 @@ class DatabaseGenerator(
     var exercise31 = Exercise("Rope Jumping")
     var exercise32 = Exercise("Burpees")
     var exercise33 = Exercise("Jumping Jacks")
+
+    fun generateSettings() {
+        settingsViewModel.insert(Settings(setting = R.string.setting_1.toString(), value = 1))
+    }
 
     fun generatePlans() {
         //generating plans

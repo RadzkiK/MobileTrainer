@@ -9,8 +9,8 @@ class SettingsRepository(private val settingsDao: SettingsDao) {
     val allSettings: Flow<List<Settings>> = settingsDao.getAll()
 
     @WorkerThread
-    fun getValueOfSettingNamed(name: String): Int {
-        return settingsDao.getSettingValueOf(name)
+    suspend fun getSettingNamed(name: String): Settings {
+        return settingsDao.getSettingNamed(name)
     }
 
     @Suppress("RedundantSuspendModifier")

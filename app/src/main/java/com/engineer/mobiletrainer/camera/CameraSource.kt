@@ -74,7 +74,7 @@ class CameraSource(
     private var detector: PoseDetector? = null
     private var classifier: PoseClassifier? = null
     private var isTrackerEnabled = false
-    private var yuvConverter: YuvToRgbConverter = YuvToRgbConverter(surfaceView.context)
+    private var yuvConverter: YuvToRgbConverter = YuvToRgbConverter()
     private lateinit var imageBitmap: Bitmap
     private var imageFileName: String = ""
 
@@ -245,13 +245,6 @@ class CameraSource(
         framesPerSecond = 0
     }
 
-    fun stopPreview() {
-        session?.stopRepeating()
-        session?.close()
-        camera?.close()
-        camera = null
-    }
-
     // process image
     private fun processImage(bitmap: Bitmap) {
         val persons = mutableListOf<Person>()
@@ -264,14 +257,14 @@ class CameraSource(
 
 
 
-                val directory = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "MobileTrainer")
-                if (!directory.exists()) {
-                    directory.mkdirs()
-                }
-                val filename = "persons.csv"
-                val file = File(directory, filename)
-                val fileExits = file.exists()
-                val fileWriter = FileWriter(file, true)
+//                val directory = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "MobileTrainer")
+//                if (!directory.exists()) {
+//                    directory.mkdirs()
+//                }
+//                val filename = "persons.csv"
+//                val file = File(directory, filename)
+//                val fileExits = file.exists()
+//                val fileWriter = FileWriter(file, true)
 
                 // if the model only returns one item, allow running the Pose classifier.
                 if (persons.isNotEmpty()) {
@@ -287,52 +280,52 @@ class CameraSource(
                         clas_score = sorted[0].second
                     }
 
-                    if(!fileExits){
-                        fileWriter.appendLine("file_name,NOSE_x,NOSE_y,NOSE_score,LEFT_EYE_x,LEFT_EYE_y,LEFT_EYE_score,RIGHT_EYE_x,RIGHT_EYE_y,RIGHT_EYE_score,LEFT_EAR_x,LEFT_EAR_y,LEFT_EAR_score,RIGHT_EAR_x,RIGHT_EAR_y,RIGHT_EAR_score,LEFT_SHOULDER_x,LEFT_SHOULDER_y,LEFT_SHOULDER_score,RIGHT_SHOULDER_x,RIGHT_SHOULDER_y,RIGHT_SHOULDER_score,LEFT_ELBOW_x,LEFT_ELBOW_y,LEFT_ELBOW_score,RIGHT_ELBOW_x,RIGHT_ELBOW_y,RIGHT_ELBOW_score,LEFT_WRIST_x,LEFT_WRIST_y,LEFT_WRIST_score,RIGHT_WRIST_x,RIGHT_WRIST_y,RIGHT_WRIST_score,LEFT_HIP_x,LEFT_HIP_y,LEFT_HIP_score,RIGHT_HIP_x,RIGHT_HIP_y,RIGHT_HIP_score,LEFT_KNEE_x,LEFT_KNEE_y,LEFT_KNEE_score,RIGHT_KNEE_x,RIGHT_KNEE_y,RIGHT_KNEE_score,LEFT_ANKLE_x,LEFT_ANKLE_y,LEFT_ANKLE_score,RIGHT_ANKLE_x,RIGHT_ANKLE_y,RIGHT_ANKLE_score,class_score,class_name")
-                    }
-                    for(person in persons) {
-                        val keyPoints = person.keyPoints
-                        val nose = keyPoints.find { item -> item.bodyPart == BodyPart.NOSE }
-                        val leftEye = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_EYE }
-                        val rightEye = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_EYE }
-                        val leftEar = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_EAR }
-                        val rightEer = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_EAR }
-                        val leftShoulder = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_SHOULDER }
-                        val rightShoulder = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_SHOULDER }
-                        val leftElbow = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_ELBOW }
-                        val rightElbow = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_ELBOW }
-                        val leftWrist = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_WRIST }
-                        val rightWrist = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_WRIST }
-                        val leftHip = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_HIP }
-                        val rightHip = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_HIP }
-                        val leftKnee = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_KNEE }
-                        val rightKnee = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_KNEE }
-                        val leftAnkle = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_ANKLE }
-                        val rightAnkle = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_ANKLE }
-
-                        fileWriter.appendLine("${imageFileName},${nose?.coordinate?.x},${nose?.coordinate?.y},${nose?.score}," +
-                                "${leftEye?.coordinate?.x},${leftEye?.coordinate?.y},${leftEye?.score}," +
-                                "${rightEye?.coordinate?.x},${rightEye?.coordinate?.y},${rightEye?.score}," +
-                                "${leftEar?.coordinate?.x},${leftEar?.coordinate?.y},${leftEar?.score}," +
-                                "${rightEer?.coordinate?.x},${rightEer?.coordinate?.y},${rightEer?.score}," +
-                                "${leftShoulder?.coordinate?.x},${leftShoulder?.coordinate?.y},${leftShoulder?.score}," +
-                                "${rightShoulder?.coordinate?.x},${rightShoulder?.coordinate?.y},${rightShoulder?.score}," +
-                                "${leftElbow?.coordinate?.x},${leftElbow?.coordinate?.y},${leftElbow?.score}," +
-                                "${rightElbow?.coordinate?.x},${rightElbow?.coordinate?.y},${rightElbow?.score}," +
-                                "${leftWrist?.coordinate?.x},${leftWrist?.coordinate?.y},${leftWrist?.score}," +
-                                "${rightWrist?.coordinate?.x},${rightWrist?.coordinate?.y},${rightWrist?.score}," +
-                                "${leftHip?.coordinate?.x},${leftHip?.coordinate?.y},${leftHip?.score}," +
-                                "${rightHip?.coordinate?.x},${rightHip?.coordinate?.y},${rightHip?.score}," +
-                                "${leftKnee?.coordinate?.x},${leftKnee?.coordinate?.y},${leftKnee?.score}," +
-                                "${rightKnee?.coordinate?.x},${rightKnee?.coordinate?.y},${rightKnee?.score}," +
-                                "${leftAnkle?.coordinate?.x},${leftAnkle?.coordinate?.y},${leftAnkle?.score}," +
-                                "${rightAnkle?.coordinate?.x},${rightAnkle?.coordinate?.y},${rightAnkle?.score}," +
-                                "$clas_score,$clas_value")
-                    }
+//                    if(!fileExits){
+//                        fileWriter.appendLine("file_name,NOSE_x,NOSE_y,NOSE_score,LEFT_EYE_x,LEFT_EYE_y,LEFT_EYE_score,RIGHT_EYE_x,RIGHT_EYE_y,RIGHT_EYE_score,LEFT_EAR_x,LEFT_EAR_y,LEFT_EAR_score,RIGHT_EAR_x,RIGHT_EAR_y,RIGHT_EAR_score,LEFT_SHOULDER_x,LEFT_SHOULDER_y,LEFT_SHOULDER_score,RIGHT_SHOULDER_x,RIGHT_SHOULDER_y,RIGHT_SHOULDER_score,LEFT_ELBOW_x,LEFT_ELBOW_y,LEFT_ELBOW_score,RIGHT_ELBOW_x,RIGHT_ELBOW_y,RIGHT_ELBOW_score,LEFT_WRIST_x,LEFT_WRIST_y,LEFT_WRIST_score,RIGHT_WRIST_x,RIGHT_WRIST_y,RIGHT_WRIST_score,LEFT_HIP_x,LEFT_HIP_y,LEFT_HIP_score,RIGHT_HIP_x,RIGHT_HIP_y,RIGHT_HIP_score,LEFT_KNEE_x,LEFT_KNEE_y,LEFT_KNEE_score,RIGHT_KNEE_x,RIGHT_KNEE_y,RIGHT_KNEE_score,LEFT_ANKLE_x,LEFT_ANKLE_y,LEFT_ANKLE_score,RIGHT_ANKLE_x,RIGHT_ANKLE_y,RIGHT_ANKLE_score,class_score,class_name")
+//                    }
+//                    for(person in persons) {
+//                        val keyPoints = person.keyPoints
+//                        val nose = keyPoints.find { item -> item.bodyPart == BodyPart.NOSE }
+//                        val leftEye = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_EYE }
+//                        val rightEye = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_EYE }
+//                        val leftEar = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_EAR }
+//                        val rightEer = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_EAR }
+//                        val leftShoulder = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_SHOULDER }
+//                        val rightShoulder = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_SHOULDER }
+//                        val leftElbow = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_ELBOW }
+//                        val rightElbow = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_ELBOW }
+//                        val leftWrist = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_WRIST }
+//                        val rightWrist = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_WRIST }
+//                        val leftHip = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_HIP }
+//                        val rightHip = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_HIP }
+//                        val leftKnee = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_KNEE }
+//                        val rightKnee = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_KNEE }
+//                        val leftAnkle = keyPoints.find { item -> item.bodyPart == BodyPart.LEFT_ANKLE }
+//                        val rightAnkle = keyPoints.find { item -> item.bodyPart == BodyPart.RIGHT_ANKLE }
+//
+//                        fileWriter.appendLine("${imageFileName},${nose?.coordinate?.x},${nose?.coordinate?.y},${nose?.score}," +
+//                                "${leftEye?.coordinate?.x},${leftEye?.coordinate?.y},${leftEye?.score}," +
+//                                "${rightEye?.coordinate?.x},${rightEye?.coordinate?.y},${rightEye?.score}," +
+//                                "${leftEar?.coordinate?.x},${leftEar?.coordinate?.y},${leftEar?.score}," +
+//                                "${rightEer?.coordinate?.x},${rightEer?.coordinate?.y},${rightEer?.score}," +
+//                                "${leftShoulder?.coordinate?.x},${leftShoulder?.coordinate?.y},${leftShoulder?.score}," +
+//                                "${rightShoulder?.coordinate?.x},${rightShoulder?.coordinate?.y},${rightShoulder?.score}," +
+//                                "${leftElbow?.coordinate?.x},${leftElbow?.coordinate?.y},${leftElbow?.score}," +
+//                                "${rightElbow?.coordinate?.x},${rightElbow?.coordinate?.y},${rightElbow?.score}," +
+//                                "${leftWrist?.coordinate?.x},${leftWrist?.coordinate?.y},${leftWrist?.score}," +
+//                                "${rightWrist?.coordinate?.x},${rightWrist?.coordinate?.y},${rightWrist?.score}," +
+//                                "${leftHip?.coordinate?.x},${leftHip?.coordinate?.y},${leftHip?.score}," +
+//                                "${rightHip?.coordinate?.x},${rightHip?.coordinate?.y},${rightHip?.score}," +
+//                                "${leftKnee?.coordinate?.x},${leftKnee?.coordinate?.y},${leftKnee?.score}," +
+//                                "${rightKnee?.coordinate?.x},${rightKnee?.coordinate?.y},${rightKnee?.score}," +
+//                                "${leftAnkle?.coordinate?.x},${leftAnkle?.coordinate?.y},${leftAnkle?.score}," +
+//                                "${rightAnkle?.coordinate?.x},${rightAnkle?.coordinate?.y},${rightAnkle?.score}," +
+//                                "$clas_score,$clas_value")
+//                    }
                 }
-                fileWriter.flush()
-                fileWriter.close()
-                Log.d(TAG, "File $filename has been saved in: ${file.absolutePath}")
+//                fileWriter.flush()
+//                fileWriter.close()
+//                Log.d(TAG, "File $filename has been saved in: ${file.absolutePath}")
             }
         }
         frameProcessedInOneSecondInterval++
@@ -469,86 +462,6 @@ class CameraSource(
         } catch (e: InterruptedException) {
             Log.d(TAG, e.message.toString())
         }
-    }
-
-    fun takePhoto() {
-
-        val ORIENTATIONS = SparseIntArray().apply {
-            append(Surface.ROTATION_0, 0)
-            append(Surface.ROTATION_90, 90)
-            append(Surface.ROTATION_180, 180)
-            append(Surface.ROTATION_270, 270)
-        }
-        // Ensure the session is not null before capturing
-        session?.let { captureSession ->
-
-            val file = File(surfaceView.context.getExternalFilesDir(null), "photo.png")
-
-            /* imageReader =
-                ImageReader.newInstance(PREVIEW_WIDTH, PREVIEW_HEIGHT, ImageFormat.YUV_420_888, 3)
-            imageReader?.setOnImageAvailableListener({ reader ->
-                val image = reader.acquireLatestImage()
-                if (image != null) {
-                    if (!::imageBitmap.isInitialized) {
-                        imageBitmap =
-                            Bitmap.createBitmap(
-                                PREVIEW_WIDTH,
-                                PREVIEW_HEIGHT,
-                                Bitmap.Config.ARGB_8888
-                            )
-                    }
-                    yuvConverter.yuvToRgb(image, imageBitmap)
-                    // Create rotated version for portrait display
-                    val rotateMatrix = Matrix()
-                    rotateMatrix.postRotate(90.0f)
-
-                    val rotatedBitmap = Bitmap.createBitmap(
-                        imageBitmap, 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT,
-                        rotateMatrix, false
-                    )
-                    processImage(rotatedBitmap)
-                    image.close()
-                }
-            }, imageReaderHandler) */
-
-            // Set up an ImageReader to get the captured image
-            //val imageReader = ImageReader.newInstance(PREVIEW_WIDTH, PREVIEW_HEIGHT, ImageFormat.JPEG, 1)
-            //val imageReader = ImageReader.newInstance(PREVIEW_WIDTH, PREVIEW_HEIGHT, ImageFormat.YUV_420_888, 3)
-            //val outputSurface = imageReader?.surface
-
-            // Create a capture request for taking a picture
-            val captureRequestBuilder = camera?.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)
-            captureRequestBuilder?.addTarget(imageReader?.surface!!)
-
-            // Set the orientation based on device rotation
-            val rotation = (surfaceView.context as Activity).windowManager.defaultDisplay.rotation
-            captureRequestBuilder?.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation))
-
-            // Set up a listener for when the image is available
-            imageReader?.setOnImageAvailableListener({ reader ->
-                val image = reader.acquireLatestImage()
-                if (image != null) {
-                    // Save the image to file
-                    //stopPreview()
-                    val bitmap = Bitmap.createBitmap(image.width, image.height, Bitmap.Config.ARGB_8888)
-                    processImage(bitmap)
-                    image.close()
-                }
-            }, imageReaderHandler)
-
-            // Capture the photo
-            try {
-                captureSession.capture(captureRequestBuilder?.build()!!, object : CameraCaptureSession.CaptureCallback() {
-                    override fun onCaptureCompleted(session: CameraCaptureSession, request: CaptureRequest, result: TotalCaptureResult) {
-                        super.onCaptureCompleted(session, request, result)
-                        Log.d(TAG, "Photo taken: ${file.absolutePath}")
-                    }
-                }, imageReaderHandler)
-            } catch (e: Exception) {
-                Log.e(TAG, "Camera exception while capturing photo: ${e.message}")
-            }
-        }
-
     }
 
     fun saveBitmapToFile(context: Context, bitmap: Bitmap, filename: String): File? {

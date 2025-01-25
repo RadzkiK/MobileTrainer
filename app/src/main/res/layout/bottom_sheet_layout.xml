@@ -25,84 +25,34 @@
         android:contentDescription="@null"
         android:src="@drawable/icn_chevron_up" />
 
-    <TextView
-        android:id="@+id/tvFps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/tvScore"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tfe_pe_tv_device" />
-
-        <Spinner
-            android:id="@+id/spnDevice"
+            android:id="@+id/tvFps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tfe_pe_tv_model" />
-
-        <Spinner
-            android:id="@+id/spnModel"
+            android:id="@+id/tvScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/vClassificationOption"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="Propability of class: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/swPoseClassification"
-            android:text="@string/tfe_pe_tv_pose_classification" />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/swPoseClassification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
 
     <TextView
         android:id="@+id/tvClassificationValue1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tvClassificationValue2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/tvClassificationValue3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
 </androidx.appcompat.widget.LinearLayoutCompat>

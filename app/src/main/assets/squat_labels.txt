@@ -1,2 +1,0 @@
-squat_down
-squat_up

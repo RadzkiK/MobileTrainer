@@ -1,2 +1,0 @@
-rowing_down
-rowing_up

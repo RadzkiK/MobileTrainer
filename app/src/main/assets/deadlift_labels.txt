@@ -1,2 +1,0 @@
-deadlift_down
-deadlift_up

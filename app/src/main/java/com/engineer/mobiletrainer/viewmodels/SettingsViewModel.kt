@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 
 class SettingsViewModel(private val repository: SettingsRepository) : ViewModel() {
     val allSettings: LiveData<List<Settings>> = repository.allSettings.asLiveData()
+    var setting = Settings("None", 0)
 
     fun insert(settings: Settings) = viewModelScope.launch {
         repository.insert(settings)
@@ -20,8 +21,8 @@ class SettingsViewModel(private val repository: SettingsRepository) : ViewModel(
         repository.update(settings)
     }
 
-    fun getValueOfSettingNamed(name: String) = viewModelScope.launch {
-        repository.getValueOfSettingNamed(name)
+    fun getSettingNamed(name: String) = viewModelScope.launch {
+        setting = repository.getSettingNamed(name)
     }
 
     fun getAllSettings() : List<Settings>? {
