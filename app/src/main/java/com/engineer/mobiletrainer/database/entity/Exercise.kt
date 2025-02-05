@@ -13,6 +13,7 @@ data class Exercise (
 ) : Parcelable{
     @PrimaryKey(autoGenerate = true) var eid: Int = 0
     @ColumnInfo(name = "description") var desc: String = ""
+    @ColumnInfo(name = "test") var tast: Int = 77
 
     constructor(parcel: Parcel) : this(parcel.readString()) {
         eid = parcel.readInt()

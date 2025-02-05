@@ -16,6 +16,11 @@ class PlansRepository(private val plansDao: PlansDao) {
         return plansDao.getPlan(name)
     }
 
+    @WorkerThread
+    suspend fun getPlans(): MutableList<Plans> {
+        return plansDao.getPlans()
+    }
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(plan: Plans) {

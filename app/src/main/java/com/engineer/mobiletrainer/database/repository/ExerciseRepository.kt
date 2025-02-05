@@ -16,6 +16,11 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         return exerciseDao.getExercise(name)
     }
 
+    @WorkerThread
+    suspend fun getExercises(): MutableList<Exercise> {
+        return exerciseDao.getExercises()
+    }
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(exercise: Exercise) {

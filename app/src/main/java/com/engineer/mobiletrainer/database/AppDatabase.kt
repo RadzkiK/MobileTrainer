@@ -23,7 +23,7 @@ import com.engineer.mobiletrainer.database.entity.TrainingSession
 import kotlinx.coroutines.CoroutineScope
 
 
-@Database(entities = [Settings::class, Profile::class, Plans::class, Exercise::class, ExerciseSet::class, ExerciseSession::class, TrainingSession::class, PlansExerciseCrossRef::class], version = 8)
+@Database(entities = [Settings::class, Profile::class, Plans::class, Exercise::class, ExerciseSet::class, ExerciseSession::class, TrainingSession::class, PlansExerciseCrossRef::class], version = 9)
 public abstract class AppDatabase : RoomDatabase() {
 
     companion object {

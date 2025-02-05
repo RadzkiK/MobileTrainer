@@ -176,7 +176,7 @@ class CalendarFragment : Fragment() {
                 bottomView.background = null
 
                 if (data.position == DayPosition.MonthDate) {
-                    textView.setTextColorRes(R.color.black)
+                    textView.setTextColorRes(R.color.background_dark)
                     layout.setBackgroundResource(if (selectedDate == data.date) R.drawable.calendar_selected_bg else 0)
 
                     val sessions = mapOfTrainingSessions[data.date]

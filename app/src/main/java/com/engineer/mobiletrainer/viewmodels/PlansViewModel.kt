@@ -45,10 +45,12 @@ class PlansViewModel(
     lateinit var exerciseFromPlan: LiveData<PlansExerciseCrossRef>
     var pecr = PlansExerciseCrossRef(0,0)
     var plan: Plans = Plans("")
+    var plans: MutableList<Plans> = emptyList<Plans>().toMutableList()
 
     var exercisesWithSessions: MutableList<ExerciseWithSessions> = emptyList<ExerciseWithSessions>().toMutableList()
     var exerciseWithPlans: MutableList<ExerciseWithPlans> = emptyList<ExerciseWithPlans>().toMutableList()
     var exercise: Exercise = Exercise("")
+    var exercises: MutableList<Exercise> = emptyList<Exercise>().toMutableList()
 
     var trainingSessionWithExerciseSessions: MutableList<TrainingSessionWithExerciseSessions> = emptyList<TrainingSessionWithExerciseSessions>().toMutableList()
     var trainingSessions: MutableList<TrainingSession> = emptyList<TrainingSession>().toMutableList()
@@ -58,6 +60,10 @@ class PlansViewModel(
     //Plans
     fun getAllPlans() : MutableList<Plans>? {
         return allPlans.value
+    }
+
+    fun getPlans() = viewModelScope.launch {
+        plans = plansRepository.getPlans()
     }
 
     fun getPlan(name: String) = viewModelScope.launch {
@@ -112,6 +118,10 @@ class PlansViewModel(
 
     fun getExercise(name: String) = viewModelScope.launch {
         exercise = exerciseRepository.getExercise(name)
+    }
+
+    fun getExercises() = viewModelScope.launch {
+        exercises = exerciseRepository.getExercises()
     }
 
     fun insertExercise(exercise: Exercise) = viewModelScope.launch {

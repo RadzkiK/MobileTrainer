@@ -22,6 +22,8 @@ interface PlansDao {
 
     @Query("SELECT * FROM plans WHERE name = :named")
     suspend fun getPlan(named: String): Plans
+    @Query("SELECT * FROM PLANS ORDER BY name ASC")
+    suspend fun getPlans(): MutableList<Plans>
     @Update(onConflict = OnConflictStrategy.ABORT)
     suspend fun update(plan: Plans)
     @Insert(onConflict = OnConflictStrategy.REPLACE)

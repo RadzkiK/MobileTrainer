@@ -1,5 +1,6 @@
 package com.engineer.mobiletrainer.database
 
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.engineer.mobiletrainer.R
@@ -59,7 +60,10 @@ class DatabaseGenerator(
     var exercise33 = Exercise("Jumping Jacks")
 
     fun generateSettings() {
-        settingsViewModel.insert(Settings(setting = R.string.setting_1.toString(), value = 1))
+        val setting = Settings(R.string.setting_1.toString(), 1)
+        settingsViewModel.insert(setting).invokeOnCompletion {
+            Log.d("DatabaseGenerator", "Setting: $setting setted as default")
+        }
     }
 
     fun generatePlans() {
@@ -348,6 +352,159 @@ class DatabaseGenerator(
             }
         })
 
+//        plansViewModel.getPlans().invokeOnCompletion { allPlans = plansViewModel.plans
+//            if(allPlans.isNotEmpty()) {
+//                plan1 = allPlans.find { it.name?.equals("Push") == true }!!
+//                plan2 = allPlans.find { it.name?.equals("Pull") == true }!!
+//                plan3 = allPlans.find { it.name?.equals("Legs") == true }!!
+//                plan4 = allPlans.find { it.name?.equals("Arms") == true }!!
+//                plan5 = allPlans.find { it.name?.equals("Cardio") == true }!!
+//            } }
+//
+//
+//        plansViewModel.getExercises().invokeOnCompletion {
+//            allExercises = plansViewModel.exercises
+//
+//            if(allExercises.isNotEmpty()) {
+//                exercise1 = allExercises.find { it.name?.equals("Benchpress") == true }!!
+//
+//                exercise2 = allExercises.find { it.name?.equals("Chest Dips") == true }!!
+//
+//                exercise3 = allExercises.find { it.name?.equals("Dips") == true }!!
+//
+//                exercise4 = allExercises.find { it.name?.equals("OverHeadPress") == true }!!
+//
+//                exercise5 = allExercises.find { it.name?.equals("PushUps") == true }!!
+//
+//                exercise6 = allExercises.find { it.name?.equals("Bent Over Row") == true }!!
+//
+//                exercise7 = allExercises.find { it.name?.equals("PullUps") == true }!!
+//
+//                exercise8 = allExercises.find { it.name?.equals("Lat Pull Down") == true }!!
+//
+//                exercise9 = allExercises.find { it.name?.equals("Good Mornings") == true }!!
+//
+//                exercise10 = allExercises.find { it.name?.equals("Arnold Press") == true }!!
+//
+//                exercise11 =
+//                    allExercises.find { it.name?.equals("Dumbbell Lateral Raise") == true }!!
+//
+//                exercise12 = allExercises.find { it.name?.equals("Cable Lateral Raise") == true }!!
+//
+//                exercise13 = allExercises.find { it.name?.equals("Squat") == true }!!
+//
+//                exercise14 = allExercises.find { it.name?.equals("Narrow Hack Squat") == true }!!
+//
+//                exercise15 = allExercises.find { it.name?.equals("Leg Extension") == true }!!
+//
+//                exercise16 = allExercises.find { it.name?.equals("Dumbbell Lunge") == true }!!
+//
+//                exercise17 = allExercises.find { it.name?.equals("Deadlift") == true }!!
+//
+//                exercise18 = allExercises.find { it.name?.equals("Standing Calf Raise") == true }!!
+//
+//                exercise19 =
+//                    allExercises.find { it.name?.equals("Standing Dumbbell Curl") == true }!!
+//
+//                exercise20 =
+//                    allExercises.find { it.name?.equals("One Arm Dumbbell Preacher Curl") == true }!!
+//
+//                exercise21 = allExercises.find { it.name?.equals("V-bar Cable Curl") == true }!!
+//
+//                exercise22 =
+//                    allExercises.find { it.name?.equals("Rope Tricep Extension") == true }!!
+//
+//                exercise23 =
+//                    allExercises.find { it.name?.equals("Reverse Single Arm Extension") == true }!!
+//
+//                exercise24 = allExercises.find { it.name?.equals("Seated French Press") == true }!!
+//
+//                exercise25 = allExercises.find { it.name?.equals("Hanging Leg Raise") == true }!!
+//
+//                exercise26 = allExercises.find { it.name?.equals("Plank") == true }!!
+//
+//                exercise27 = allExercises.find { it.name?.equals("Barbell Wrist Curl") == true }!!
+//
+//                exercise28 =
+//                    allExercises.find { it.name?.equals("Reverse Barbell Wrist Curl") == true }!!
+//
+//                exercise29 = allExercises.find { it.name?.equals("Running") == true }!!
+//
+//                exercise30 = allExercises.find { it.name?.equals("Bicycle Riding") == true }!!
+//
+//                exercise31 = allExercises.find { it.name?.equals("Rope Jumping") == true }!!
+//
+//                exercise32 = allExercises.find { it.name?.equals("Burpees") == true }!!
+//
+//                exercise33 = allExercises.find { it.name?.equals("Jumping Jacks") == true }!!
+//
+//            }
+//        }
+//
+//
+//        //making pairs to fill the plans
+//        //plan1
+//        val p1e1 = PlansExerciseCrossRef(plan1.pid, exercise1.eid)
+//        val p1e2 = PlansExerciseCrossRef(plan1.pid, exercise2.eid)
+//        val p1e3 = PlansExerciseCrossRef(plan1.pid, exercise3.eid)
+//        val p1e4 = PlansExerciseCrossRef(plan1.pid, exercise4.eid)
+//        val p1e5 = PlansExerciseCrossRef(plan1.pid, exercise5.eid)
+//        //plan2
+//        val p2e6 = PlansExerciseCrossRef(plan2.pid, exercise6.eid)
+//        val p2e7 = PlansExerciseCrossRef(plan2.pid, exercise7.eid)
+//        val p2e8 = PlansExerciseCrossRef(plan2.pid, exercise8.eid)
+//        val p2e9 = PlansExerciseCrossRef(plan2.pid, exercise9.eid)
+//        val p2e19 = PlansExerciseCrossRef(plan2.pid, exercise19.eid)
+//        val p2e21 = PlansExerciseCrossRef(plan2.pid, exercise21.eid)
+//        //plan3
+//        val p3e13 = PlansExerciseCrossRef(plan3.pid, exercise13.eid)
+//        val p3e17 = PlansExerciseCrossRef(plan3.pid, exercise17.eid)
+//        val p3e14 = PlansExerciseCrossRef(plan3.pid, exercise14.eid)
+//        val p3e15 = PlansExerciseCrossRef(plan3.pid, exercise15.eid)
+//        val p3e16 = PlansExerciseCrossRef(plan3.pid, exercise16.eid)
+//        val p3e18 = PlansExerciseCrossRef(plan3.pid, exercise18.eid)
+//        //plan4
+//        val p4e3 = PlansExerciseCrossRef(plan4.pid, exercise3.eid)
+//        val p4e10 = PlansExerciseCrossRef(plan4.pid, exercise10.eid)
+//        val p4e11 = PlansExerciseCrossRef(plan4.pid, exercise11.eid)
+//        val p4e19 = PlansExerciseCrossRef(plan4.pid, exercise19.eid)
+//        val p4e24 = PlansExerciseCrossRef(plan4.pid, exercise24.eid)
+//        val p4e22 = PlansExerciseCrossRef(plan4.pid, exercise22.eid)
+//        val p4e27 = PlansExerciseCrossRef(plan4.pid, exercise27.eid)
+//        val p4e28 = PlansExerciseCrossRef(plan4.pid, exercise28.eid)
+//        //plan5
+//        val p5e30 = PlansExerciseCrossRef(plan5.pid, exercise30.eid)
+//        val p5e32 = PlansExerciseCrossRef(plan5.pid, exercise32.eid)
+//        val p5e31 = PlansExerciseCrossRef(plan5.pid, exercise31.eid)
+//
+//        plansViewModel.insertPlanExercise(p1e1)
+//        plansViewModel.insertPlanExercise(p1e2)
+//        plansViewModel.insertPlanExercise(p1e3)
+//        plansViewModel.insertPlanExercise(p1e4)
+//        plansViewModel.insertPlanExercise(p1e5)
+//        plansViewModel.insertPlanExercise(p2e6)
+//        plansViewModel.insertPlanExercise(p2e7)
+//        plansViewModel.insertPlanExercise(p2e8)
+//        plansViewModel.insertPlanExercise(p2e9)
+//        plansViewModel.insertPlanExercise(p2e19)
+//        plansViewModel.insertPlanExercise(p2e21)
+//        plansViewModel.insertPlanExercise(p3e13)
+//        plansViewModel.insertPlanExercise(p3e17)
+//        plansViewModel.insertPlanExercise(p3e14)
+//        plansViewModel.insertPlanExercise(p3e15)
+//        plansViewModel.insertPlanExercise(p3e16)
+//        plansViewModel.insertPlanExercise(p3e18)
+//        plansViewModel.insertPlanExercise(p4e3)
+//        plansViewModel.insertPlanExercise(p4e10)
+//        plansViewModel.insertPlanExercise(p4e11)
+//        plansViewModel.insertPlanExercise(p4e19)
+//        plansViewModel.insertPlanExercise(p4e24)
+//        plansViewModel.insertPlanExercise(p4e22)
+//        plansViewModel.insertPlanExercise(p4e27)
+//        plansViewModel.insertPlanExercise(p4e28)
+//        plansViewModel.insertPlanExercise(p5e30)
+//        plansViewModel.insertPlanExercise(p5e32)
+//        plansViewModel.insertPlanExercise(p5e31)
 
         plansViewModel.allExercises.observe(activity, Observer { exercises ->
             allExercises = exercises
@@ -426,6 +583,7 @@ class DatabaseGenerator(
                 exercise33 = allExercises.find { it.name?.equals("Jumping Jacks") == true }!!
 
             }
+
 
             //making pairs to fill the plans
             //plan1

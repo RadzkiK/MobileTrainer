@@ -22,7 +22,7 @@ class ExerciseChoice : Fragment() {
             view -> view.findNavController().navigate(R.id.action_exerciseChoice_to_trainingActivity)
         })
 
-        view.findViewById<LinearLayout>(R.id.benchpressView).setOnClickListener(View.OnClickListener() {
+        view.findViewById<LinearLayout>(R.id.pushupView).setOnClickListener(View.OnClickListener() {
                 view -> view.findNavController().navigate(R.id.action_exerciseChoice_to_trainingActivity)
         })
 

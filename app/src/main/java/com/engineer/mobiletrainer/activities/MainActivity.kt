@@ -81,14 +81,20 @@ class MainActivity : AppCompatActivity() {
             })
                 dialog.show()
                 //also if this is first time let's generate some values in database
-                val databaseGenerator = DatabaseGenerator(plansViewModel, settingsViewModel, this)
+                var databaseGenerator = DatabaseGenerator(plansViewModel, settingsViewModel, this)
                 try {
                     databaseGenerator.generatePlans()
                     sleep(100)
                     databaseGenerator.generateExercises()
                     sleep(100)
+//                    plansViewModel.getPlans()
+//                    val allPlans = plansViewModel.plans
+//                    plansViewModel.getExercises()
+//                    val exercises = plansViewModel.exercises
                     databaseGenerator.matchPlansAndExercises()
+                    sleep(10)
                     databaseGenerator.generateSettings()
+
 
                 } catch (e: Exception) {
                     val builder = AlertDialog.Builder(this)
@@ -96,8 +102,10 @@ class MainActivity : AppCompatActivity() {
                     builder.setMessage("Run application again")
                 }
 
+
+
         } else {
-            //if there is a profile then do nothing
+            //if there is a profile then keep credentials in sharedPref
             val name: String? = profiles[0].name
             val uid: Int = profiles[0].uid
             val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return@observe
@@ -109,9 +117,6 @@ class MainActivity : AppCompatActivity() {
 
         }
         }
-
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

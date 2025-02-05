@@ -18,6 +18,8 @@ interface ExerciseDao {
     fun getAll(): Flow<MutableList<Exercise>>
     @Query("SELECT * FROM exercises WHERE name = :named")
     suspend fun getExercise(named: String): Exercise
+    @Query("SELECT * FROM exercises ORDER BY name ASC")
+    suspend fun getExercises(): MutableList<Exercise>
     @Update(onConflict = OnConflictStrategy.ABORT)
     suspend fun update(exercise: Exercise)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
